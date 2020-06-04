@@ -1,0 +1,8 @@
+Program açıldı
+LocalDateTime : 2020-06-04T20:18:35.723
+Program açıldı
+LocalDateTime : 2020-06-04T20:24:57.682
+Program açıldı
+LocalDateTime : 2020-06-04T20:25:02.163
+Program açıldı
+LocalDateTime : 2020-06-04T21:09:59.544

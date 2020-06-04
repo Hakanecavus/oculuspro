@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SellController">
+   <top>
+      <GridPane prefHeight="74.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <MenuBar prefHeight="32.0" prefWidth="1280.0" style="-fx-background-color: #636363;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="İletişim">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#email" text="E-Mail" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <ToolBar prefHeight="50.0" prefWidth="1280.0" style="-fx-background-color: #636363;" GridPane.rowIndex="1">
+              <items>
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#backMain" prefWidth="86.0" style="-fx-background-color: #64106F;" text="Ana Sayfa" textFill="WHITE" />
+                  <Button layoutX="101.0" layoutY="10.0" mnemonicParsing="false" onAction="#backSell" prefWidth="86.0" style="-fx-background-color: #64106F;" text="Geri" textFill="WHITE" />
+                <Button mnemonicParsing="false" onAction="#masrafClear" prefWidth="86.0" style="-fx-background-color: #64106F;" text="Temizle" textFill="WHITE" />
+              </items>
+            </ToolBar>
+         </children>
+      </GridPane>
+   </top>
+   <left>
+      <AnchorPane prefHeight="660.0" prefWidth="320.0" style="-fx-background-color: #969696;" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="masrafBarcode" layoutX="9.0" layoutY="14.0" prefHeight="33.0" prefWidth="292.0" promptText="Barkod" />
+            <TextField fx:id="masrafFiyati" layoutX="9.0" layoutY="57.0" prefHeight="33.0" prefWidth="292.0" promptText="Fiyat" />
+            <TextField fx:id="masrafAciklama" layoutX="9.0" layoutY="98.0" prefHeight="106.0" prefWidth="292.0" promptText="Açıklama" />
+            <Button layoutX="223.0" layoutY="212.0" mnemonicParsing="false" onAction="#masrafButton" prefHeight="31.0" prefWidth="78.0" style="-fx-background-color: #64106F;" text="Ekle" textFill="WHITE" />
+            <Button layoutX="14.0" layoutY="599.0" mnemonicParsing="false" onAction="#masrafKaydet" prefHeight="33.0" prefWidth="292.0" style="-fx-background-color: #64106F;" text="Sepete Ekle" textFill="WHITE" AnchorPane.bottomAnchor="14.0" />
+            <Label layoutX="14.0" layoutY="479.0" text="Toplam Fiyat:" AnchorPane.bottomAnchor="120.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="masrafLabel" layoutX="14.0" layoutY="514.0" text="000000" AnchorPane.bottomAnchor="70.0">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="160.0" layoutY="527.0" text="TL" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="140.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <TableView fx:id="masrafTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="50.0" text="#" />
+            <TableColumn fx:id="masrafBarkod" prefWidth="140.0" text="Barkod" />
+            <TableColumn fx:id="masrafUrun" prefWidth="578.0" text="Açıklama" />
+            <TableColumn fx:id="masrafFiyat" prefWidth="175.0" text="Fiyat" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>

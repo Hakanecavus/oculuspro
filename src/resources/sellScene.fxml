@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SellController">
+   <top>
+      <GridPane prefHeight="74.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <MenuBar prefHeight="32.0" prefWidth="1280.0" style="-fx-background-color: #636363;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="İletişim">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#email" text="E-Mail" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <ToolBar prefHeight="50.0" prefWidth="1280.0" style="-fx-background-color: #636363;" GridPane.rowIndex="1">
+              <items>
+                  <Button contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#backMain" style="-fx-background-color: #64106F;" text="Ana Sayfa" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#clear" prefWidth="86.0" style="-fx-background-color: #64106F;" text="Temizle" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor></Button>
+                  <Button contentDisplay="CENTER" layoutX="101.0" layoutY="10.0" mnemonicParsing="false" onAction="#indirimUygula" prefHeight="31.0" prefWidth="172.0" style="-fx-background-color: #64106F;" text="İndirim Uygula" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button contentDisplay="CENTER" layoutX="192.0" layoutY="10.0" mnemonicParsing="false" onAction="#indirimIptal" prefHeight="31.0" prefWidth="172.0" style="-fx-background-color: #64106F;" text="İndirimi İptal Et" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button contentDisplay="CENTER" layoutX="101.0" layoutY="10.0" mnemonicParsing="false" onAction="#itemDrop" prefHeight="31.0" prefWidth="86.0" style="-fx-background-color: #64106F;" text="Sil" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#masrafShift" prefHeight="31.0" prefWidth="172.0" style="-fx-background-color: #64106F;" text="Masraf Ekle" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+              </items>
+            </ToolBar>
+         </children>
+      </GridPane>
+   </top>
+   <left>
+      <AnchorPane prefHeight="646.0" prefWidth="374.0" style="-fx-background-color: #969696;" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="tckimlik" layoutX="14.0" layoutY="41.0" prefHeight="31.0" prefWidth="350.0" promptText="T.C. Kimlik Numarası" />
+            <TextField fx:id="name" layoutX="14.0" layoutY="79.0" prefHeight="11.0" prefWidth="350.0" promptText="İsim" />
+            <TextField fx:id="surname" layoutX="14.0" layoutY="116.0" prefHeight="11.0" prefWidth="350.0" promptText="Soyisim" />
+            <TextField fx:id="telefon" layoutX="14.0" layoutY="155.0" prefHeight="11.0" prefWidth="350.0" promptText="Telefon" />
+            <Label layoutX="14.0" layoutY="14.0" text="Müşteri Bilgileri" />
+            <TextField fx:id="receteNo" layoutX="14.0" layoutY="192.0" prefHeight="11.0" prefWidth="350.0" promptText="Reçete No" />
+            <TextField fx:id="receteTarihi" layoutX="14.0" layoutY="230.0" prefHeight="11.0" prefWidth="350.0" promptText="Reçete Tarihi" />
+            <Label layoutX="14.0" layoutY="547.0" text="Fiyat:" AnchorPane.bottomAnchor="78.0" />
+            <Label fx:id="fiyat" layoutX="14.0" layoutY="576.0" text="000000" AnchorPane.bottomAnchor="20.0">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Label layoutX="131.0" layoutY="586.0" text="TL" AnchorPane.bottomAnchor="29.0">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <TextField fx:id="basvuruTarihi" layoutX="14.0" layoutY="269.0" prefHeight="11.0" prefWidth="350.0" promptText="Başvuru Tarihi" />
+            <TextField fx:id="lensBarkode" layoutX="14.0" layoutY="308.0" prefHeight="31.0" prefWidth="220.0" promptText="Lens Barkod" />
+            <TextField fx:id="camBarkod" layoutX="14.0" layoutY="346.0" prefHeight="31.0" prefWidth="220.0" promptText="Cam Barkod" />
+            <TextField fx:id="cerceveBarkod" layoutX="14.0" layoutY="385.0" prefHeight="31.0" prefWidth="220.0" promptText="Çerçeve Barkod" />
+            <TextField fx:id="ozelUrunBarkod" layoutX="14.0" layoutY="423.0" prefHeight="31.0" prefWidth="220.0" promptText="Özel Ürün Barkod" />
+            <TextField fx:id="indirim" layoutX="14.0" layoutY="463.0" prefHeight="11.0" prefWidth="350.0" promptText="Uygulanan İndirim" />
+            <Button layoutX="241.0" layoutY="346.0" mnemonicParsing="false" onAction="#sellGlassButton" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: #64106F;" text="Cam Ekle" textFill="WHITE" />
+            <Button layoutX="241.0" layoutY="385.0" mnemonicParsing="false" onAction="#sellFrameButton" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: #64106F;" text="Çerçeve Ekle" textFill="WHITE" />
+            <Button layoutX="241.0" layoutY="308.0" mnemonicParsing="false" onAction="#sellContactLensButton" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: #64106F;" text="Lens Ekle" textFill="WHITE" />
+            <Button layoutX="241.0" layoutY="423.0" mnemonicParsing="false" onAction="#sellItemButton" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: #64106F;" text="Özel Ürün Ekle" textFill="WHITE" />
+            <Button layoutX="241.0" layoutY="586.0" mnemonicParsing="false" onAction="#sellButton" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: #64106F;" text="Kaydet" textFill="WHITE" AnchorPane.bottomAnchor="29.0" />
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Lens">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="lensTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        					<columns>
+            					<TableColumn fx:id="lensId" prefWidth="38.0" text="#" />
+          						<TableColumn fx:id="lensBarkod" prefWidth="128.0" text="Barkod" />
+          						<TableColumn fx:id="lensTemelEgri" prefWidth="87.0" text="Temel Eğri" />
+           						<TableColumn fx:id="lensDiyoptri" prefWidth="75.0" text="Diyoptri" />
+            					<TableColumn fx:id="lensTumCap" prefWidth="79.0" text="Tüm Çap" />
+            					<TableColumn fx:id="lensCyl" prefWidth="56.0" text="Cyl" />
+            					<TableColumn fx:id="lensAks" prefWidth="60.0" text="Aks" />
+            					<TableColumn fx:id="lensMultifokal" minWidth="9.0" prefWidth="93.0" text="Multifokal" />
+            					<TableColumn fx:id="lensRenk" prefWidth="69.0" text="Renk" />
+           				 		<TableColumn fx:id="lensOzelAd" prefWidth="79.0" text="Özel Ad" />
+            					<TableColumn fx:id="lensSatisFiyat" prefWidth="102.0" text="Satış Fiyatı" />
+        					</columns>
+     					</TableView>
+                     </center>
+                  </BorderPane>
+               </content>
+          </Tab>
+          <Tab text="Cam">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                         <TableView fx:id="glassTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        					<columns>
+            					<TableColumn prefWidth="38.0" text="#" />
+          						<TableColumn fx:id="glassBarkod" prefWidth="161.0" text="Barkod" />
+          						<TableColumn fx:id="glassMarka" prefWidth="112.0" text="Marka" />
+            					<TableColumn fx:id="glassTur" prefWidth="122.0" text="Tür" />
+            					<TableColumn fx:id="glassTip" prefWidth="115.0" text="Tip" />
+            					<TableColumn fx:id="glassSferik" prefWidth="70.0" text="Sferik" />
+            					<TableColumn fx:id="glassSilendirik" prefWidth="76.0" text="Silendirik" />
+            					<TableColumn fx:id="glassAks" prefWidth="48.0" text="Aks" />
+            					<TableColumn fx:id="glassSatisFiyat" prefWidth="105.0" text="Satış Fiyatı" />
+        					</columns>
+      					</TableView>
+                     </center>
+                  </BorderPane>
+               </content>
+          </Tab>
+            <Tab text="Çerçeve">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                     	<TableView fx:id="frameTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        					<columns>
+            					<TableColumn fx:id="frameId" prefWidth="38.0" text="#" />
+          						<TableColumn fx:id="frameBarkod" prefWidth="143.0" text="Barkod" />
+          						<TableColumn fx:id="frameMarka" prefWidth="96.0" text="Marka" />
+            					<TableColumn fx:id="frameModel" prefWidth="101.0" text="Model" />
+            					<TableColumn fx:id="frameEkartman" prefWidth="113.0" text="Ekartman" />
+            					<TableColumn fx:id="frameOzelAdi" prefWidth="148.0" text="Özel Adi" />
+            					<TableColumn fx:id="frameRenk" prefWidth="94.0" text="Renk" />
+            					<TableColumn fx:id="frameSatisFiyat" prefWidth="108.0" text="Satış Fiyatı" />
+        					</columns>
+      					</TableView>
+                     </center>
+                  </BorderPane>
+               </content>
+          </Tab>
+            <Tab text="Özel Ürün">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                       <TableView fx:id="itemTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        					<columns>
+            					<TableColumn prefWidth="38.0" text="#" />
+          						<TableColumn fx:id="itemBarkod" prefWidth="161.0" text="Barkod" />
+          						<TableColumn fx:id="itemUrun" prefWidth="247.0" text="Ürün" />
+            					<TableColumn fx:id="itemSatisFiyat" prefWidth="169.0" text="Satış Fiyatı" />
+        					</columns>
+      					</TableView>
+                     </center>
+                  </BorderPane>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
