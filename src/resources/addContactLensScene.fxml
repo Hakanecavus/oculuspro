@@ -49,19 +49,14 @@
       <AnchorPane prefHeight="660.0" prefWidth="320.0" style="-fx-background-color: #969696;" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="addLensBarkod" layoutX="14.0" layoutY="14.0" prefHeight="33.0" prefWidth="292.0" promptText="Barkod" />
-            <TextField fx:id="addLensTemelEgri" layoutX="14.0" layoutY="54.0" prefHeight="33.0" prefWidth="292.0" promptText="Temel Eğri" />
-            <TextField fx:id="addLensDiyoptri" layoutX="14.0" layoutY="95.0" prefHeight="33.0" prefWidth="292.0" promptText="Diyoptri" />
-            <TextField fx:id="addLensTumCap" layoutX="14.0" layoutY="136.0" prefHeight="33.0" prefWidth="292.0" promptText="Tüm Çap" />
-            <TextField fx:id="addLensCyl" layoutX="14.0" layoutY="176.0" prefHeight="33.0" prefWidth="292.0" promptText="Cyl" />
-            <TextField fx:id="addLensAks" layoutX="14.0" layoutY="217.0" prefHeight="33.0" prefWidth="292.0" promptText="Aks" />
-            <TextField fx:id="addLensMultifokal" layoutX="14.0" layoutY="257.0" prefHeight="33.0" prefWidth="292.0" promptText="Multifokal" />
-            <Button layoutX="223.0" layoutY="504.0" mnemonicParsing="false" onAction="#addContactLensButton" prefHeight="31.0" prefWidth="83.0" style="-fx-background-color: #64106F;" text="Ekle" textFill="WHITE" />
-            <TextField fx:id="addLensRenk" layoutX="14.0" layoutY="297.0" prefHeight="33.0" prefWidth="292.0" promptText="Renk" />
-            <TextField fx:id="addLensOzelAd" layoutX="14.0" layoutY="337.0" prefHeight="33.0" prefWidth="292.0" promptText="Özel Ad" />
+            <TextField fx:id="addLensDiyoptri" layoutX="14.0" layoutY="55.0" prefHeight="33.0" prefWidth="292.0" promptText="Diyoptri" />
+            <TextField fx:id="addLensCyl" layoutX="14.0" layoutY="96.0" prefHeight="33.0" prefWidth="292.0" promptText="Cyl" />
+            <TextField fx:id="addLensAks" layoutX="14.0" layoutY="137.0" prefHeight="33.0" prefWidth="292.0" promptText="Aks" />
+            <Button layoutX="223.0" layoutY="298.0" mnemonicParsing="false" onAction="#addContactLensButton" prefHeight="31.0" prefWidth="83.0" style="-fx-background-color: #64106F;" text="Ekle" textFill="WHITE" />
             <Button layoutX="8.0" layoutY="601.0" mnemonicParsing="false" onAction="#saveContactLens" prefHeight="31.0" prefWidth="305.0" style="-fx-background-color: #64106F;" text="Kaydet" textFill="WHITE" AnchorPane.bottomAnchor="14.0" />
-            <TextField fx:id="addLensAdet" layoutX="14.0" layoutY="377.0" prefHeight="33.0" prefWidth="292.0" promptText="Adet" />
-            <TextField fx:id="addLensAlisFiyat" layoutX="14.0" layoutY="417.0" prefHeight="33.0" prefWidth="292.0" promptText="Alış Fiyatı" />
-            <TextField fx:id="addLensSatisFiyat" layoutX="14.0" layoutY="460.0" prefHeight="33.0" prefWidth="292.0" promptText="Staış Fiyatı" />
+            <TextField fx:id="addLensAdet" layoutX="14.0" layoutY="177.0" prefHeight="33.0" prefWidth="292.0" promptText="Adet" />
+            <TextField fx:id="addLensAlisFiyat" layoutX="14.0" layoutY="217.0" prefHeight="33.0" prefWidth="292.0" promptText="Alış Fiyatı" />
+            <TextField fx:id="addLensSatisFiyat" layoutX="14.0" layoutY="258.0" prefHeight="33.0" prefWidth="292.0" promptText="Staış Fiyatı" />
          </children>
       </AnchorPane>
    </left>
@@ -69,17 +64,12 @@
       <TableView fx:id="lensTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="lensBarkod" prefWidth="128.0" text="Barkod" />
-          <TableColumn fx:id="lensTemelEgri" prefWidth="82.0" text="Temel Eğri" />
-            <TableColumn fx:id="lensDiyoptri" prefWidth="68.0" text="Diyoptri" />
-            <TableColumn fx:id="lensTumCap" prefWidth="69.0" text="Tüm Çap" />
-            <TableColumn fx:id="lensCyl" prefWidth="53.0" text="Cyl" />
-            <TableColumn fx:id="lensAks" prefWidth="57.0" text="Aks" />
-            <TableColumn fx:id="lensMultifokal" minWidth="9.0" prefWidth="94.0" text="Multifokal" />
-            <TableColumn fx:id="lensRenk" prefWidth="68.0" text="Renk" />
-            <TableColumn fx:id="lensOzelAd" text="Özel Ad" />
-            <TableColumn fx:id="lensAlisFiyat" prefWidth="88.0" text="Alış Fiyatı" />
-            <TableColumn fx:id="lensSatisFiyat" prefWidth="93.0" text="Satış Fiyatı" />
-            <TableColumn fx:id="lensAdet" prefWidth="78.0" text="Adet" />
+            <TableColumn fx:id="lensDiyoptri" prefWidth="137.0" text="Diyoptri" />
+            <TableColumn fx:id="lensCyl" prefWidth="151.0" text="Cyl" />
+            <TableColumn fx:id="lensAks" prefWidth="142.0" text="Aks" />
+            <TableColumn fx:id="lensAlisFiyat" prefWidth="139.0" text="Alış Fiyatı" />
+            <TableColumn fx:id="lensSatisFiyat" prefWidth="144.0" text="Satış Fiyatı" />
+            <TableColumn fx:id="lensAdet" prefWidth="111.0" text="Adet" />
         </columns>
       </TableView>
    </center>

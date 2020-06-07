@@ -51,31 +51,25 @@
             <TextField fx:id="addGlassBarkod" layoutX="14.0" layoutY="14.0" prefHeight="33.0" prefWidth="292.0" promptText="Barkod" />
             <TextField fx:id="addGlassMarka" layoutX="14.0" layoutY="54.0" prefHeight="33.0" prefWidth="292.0" promptText="Marka" />
             <TextField fx:id="addGlassTur" layoutX="14.0" layoutY="95.0" prefHeight="33.0" prefWidth="292.0" promptText="Tür" />
-            <TextField fx:id="addGlassTip" layoutX="14.0" layoutY="136.0" prefHeight="33.0" prefWidth="292.0" promptText="Tip" />
-            <TextField fx:id="addGlassSferik" layoutX="14.0" layoutY="176.0" prefHeight="33.0" prefWidth="292.0" promptText="Sferik" />
-            <TextField fx:id="addGlassSilendirik" layoutX="14.0" layoutY="217.0" prefHeight="33.0" prefWidth="292.0" promptText="Silendirik" />
-            <TextField fx:id="addGlassAks" layoutX="14.0" layoutY="257.0" prefHeight="33.0" prefWidth="292.0" promptText="Aks" />
-            <TextField fx:id="addGlassAdet" layoutX="14.0" layoutY="299.0" prefHeight="33.0" prefWidth="292.0" promptText="Adet" />
-            <TextField fx:id="addGlassAlisFiyat" layoutX="15.0" layoutY="340.0" prefHeight="33.0" prefWidth="292.0" promptText="Alış Fiyatı" />
-            <TextField fx:id="addGlassSatisFiyat" layoutX="15.0" layoutY="380.0" prefHeight="33.0" prefWidth="292.0" promptText="Satış Fiyatı" />
-            <Button layoutX="224.0" layoutY="429.0" mnemonicParsing="false" onAction="#addGlassButton" prefHeight="31.0" prefWidth="83.0" style="-fx-background-color: #64106F;" text="Ekle" textFill="WHITE" />
-            <Button layoutX="8.0" layoutY="601.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="305.0" style="-fx-background-color: #64106F;" text="Kaydet" textFill="WHITE" AnchorPane.bottomAnchor="14.0" />
+            <TextField fx:id="addGlassTip" layoutX="14.0" layoutY="136.0" prefHeight="33.0" prefWidth="292.0" promptText="Index" />
+            <TextField fx:id="addGlassAdet" layoutX="14.0" layoutY="177.0" prefHeight="33.0" prefWidth="292.0" promptText="Adet" />
+            <TextField fx:id="addGlassAlisFiyat" layoutX="15.0" layoutY="218.0" prefHeight="33.0" prefWidth="292.0" promptText="Alış Fiyatı" />
+            <TextField fx:id="addGlassSatisFiyat" layoutX="15.0" layoutY="258.0" prefHeight="33.0" prefWidth="292.0" promptText="Satış Fiyatı" />
+            <Button layoutX="224.0" layoutY="307.0" mnemonicParsing="false" onAction="#addGlassButton" prefHeight="31.0" prefWidth="83.0" style="-fx-background-color: #64106F;" text="Ekle" textFill="WHITE" />
+            <Button layoutX="8.0" layoutY="601.0" mnemonicParsing="false" onAction="#saveGlass" prefHeight="31.0" prefWidth="305.0" style="-fx-background-color: #64106F;" text="Kaydet" textFill="WHITE" AnchorPane.bottomAnchor="14.0" />
          </children>
       </AnchorPane>
    </left>
    <center>
       <TableView fx:id="glassTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="glassBarkod" prefWidth="161.0" text="Barkod" />
-          <TableColumn fx:id="glassMarka" prefWidth="112.0" text="Marka" />
-            <TableColumn fx:id="glassTur" prefWidth="102.0" text="Tür" />
-            <TableColumn fx:id="glassTip" prefWidth="100.0" text="Tip" />
-            <TableColumn fx:id="glassSferik" prefWidth="77.0" text="Sferik" />
-            <TableColumn fx:id="glassSilendirik" prefWidth="82.0" text="Silendirik" />
-            <TableColumn fx:id="glassAks" prefWidth="53.0" text="Aks" />
-            <TableColumn fx:id="glassAlisFiyat" prefWidth="93.0" text="Alış Fiyatı" />
-            <TableColumn fx:id="glassSatisFiyat" prefWidth="89.0" text="Satış Fiyatı" />
-            <TableColumn fx:id="glassAdet" prefWidth="71.0" text="Adet" />
+          <TableColumn fx:id="glassBarkod" prefWidth="167.0" text="Barkod" />
+          <TableColumn fx:id="glassMarka" prefWidth="165.0" text="Marka" />
+            <TableColumn fx:id="glassTur" prefWidth="117.0" text="Tür" />
+            <TableColumn fx:id="glassTip" prefWidth="127.0" text="Index" />
+            <TableColumn fx:id="glassAlisFiyat" prefWidth="143.0" text="Alış Fiyatı" />
+            <TableColumn fx:id="glassSatisFiyat" prefWidth="131.0" text="Satış Fiyatı" />
+            <TableColumn fx:id="glassAdet" prefWidth="103.0" text="Adet" />
         </columns>
       </TableView>
    </center>
