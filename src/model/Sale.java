@@ -1,78 +1,124 @@
 package model;
 
 public class Sale {
-	private int id;
-	private double toplamFiyat;
-	private double indirim;
-	private String eklemeTarihi;
-	private String tcNo;
-	private String receteNo;
 
-	
-	public Sale(double toplamFiyat, double indirim, String tcNo, String receteNo) {
-		super();
-		this.toplamFiyat = toplamFiyat;
-		this.indirim = indirim;
-		this.tcNo = tcNo;
-		this.receteNo = receteNo;
-	}
+    private int id;
+    private double toplamFiyat;
+    private String tarih;
+    private String tcNo;
+    private String camReceteNo;
+    private String lensReceteNo;
+    private double sgk;
+    private double kart;
+    private double nakit;
 
-	public Sale(int id, double toplamFiyat, double indirim, String eklemeTarihi, String tcNo, String receteNo) {
-		super();
-		this.id = id;
-		this.toplamFiyat = toplamFiyat;
-		this.indirim = indirim;
-		this.eklemeTarihi = eklemeTarihi;
-		this.tcNo = tcNo;
-		this.receteNo = receteNo;
-	}
+    public Sale(double toplamFiyat, String tarih, String tcNo, String camReceteNo, String lensReceteNo, double sgk, double kart, double nakit) {
+        this.toplamFiyat = toplamFiyat;
+        this.tarih = tarih;
+        this.tcNo = tcNo;
+        this.camReceteNo = camReceteNo;
+        this.lensReceteNo = lensReceteNo;
+        this.sgk = sgk;
+        this.kart = kart;
+        this.nakit = nakit;
+    }
 
-	public String getEklemeTarihi() {
-		return eklemeTarihi;
-	}
+    public Sale(int id, double toplamFiyat, String tarih, String tcNo, String camReceteNo, String lensReceteNo, double sgk, double kart, double nakit) {
+        this.id = id;
+        this.toplamFiyat = toplamFiyat;
+        this.tarih = tarih;
+        this.tcNo = tcNo;
+        this.camReceteNo = camReceteNo;
+        this.lensReceteNo = lensReceteNo;
+        this.sgk = sgk;
+        this.kart = kart;
+        this.nakit = nakit;
+    }
 
-	public void setEklemeTarihi(String eklemeTarihi) {
-		this.eklemeTarihi = eklemeTarihi;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getTcNo() {
-		return tcNo;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setTcNo(String tcNo) {
-		this.tcNo = tcNo;
-	}
+    public double getToplamFiyat() {
+        return toplamFiyat;
+    }
 
-	public String getRecete_no() {
-		return receteNo;
-	}
+    public void setToplamFiyat(double toplamFiyat) {
+        this.toplamFiyat = toplamFiyat;
+    }
 
-	public void setRecete_no(String recete_no) {
-		this.receteNo = recete_no;
-	}
+    public String getTarih() {
+        return tarih;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setTarih(String tarih) {
+        this.tarih = tarih;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public String getTcNo() {
+        return tcNo;
+    }
 
-	public double getToplamFiyat() {
-		return toplamFiyat;
-	}
+    public void setTcNo(String tcNo) {
+        this.tcNo = tcNo;
+    }
 
-	public void setToplamFiyat(double toplamFiyat) {
-		this.toplamFiyat = toplamFiyat;
-	}
+    public String getCamReceteNo() {
+        return camReceteNo;
+    }
 
-	public double getIndirim() {
-		return indirim;
-	}
+    public void setCamReceteNo(String camReceteNo) {
+        this.camReceteNo = camReceteNo;
+    }
 
-	public void setIndirim(double indirim) {
-		this.indirim = indirim;
-	}
+    public String getLensReceteNo() {
+        return lensReceteNo;
+    }
 
+    public void setLensReceteNo(String lensReceteNo) {
+        this.lensReceteNo = lensReceteNo;
+    }
+
+    public double getSgk() {
+        return sgk;
+    }
+
+    public void setSgk(double sgk) {
+        this.sgk = sgk;
+    }
+
+    public double getKart() {
+        return kart;
+    }
+
+    public void setKart(double kart) {
+        this.kart = kart;
+    }
+
+    public double getNakit() {
+        return nakit;
+    }
+
+    public void setNakit(double nakit) {
+        this.nakit = nakit;
+    }
+
+    @Override
+    public String toString() {
+        return "Sale{" +
+                "id=" + id +
+                ", toplamFiyat=" + toplamFiyat +
+                ", tarih='" + tarih + '\'' +
+                ", tcNo='" + tcNo + '\'' +
+                ", camReceteNo='" + camReceteNo + '\'' +
+                ", lensReceteNo='" + lensReceteNo + '\'' +
+                ", sgk=" + sgk +
+                ", kart=" + kart +
+                ", nakit=" + nakit +
+                '}';
+    }
 }

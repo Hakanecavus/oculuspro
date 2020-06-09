@@ -87,4 +87,15 @@ public class Customer {
 		this.telefon = telefon;
 	}
 
+	@Override
+	public String toString() {
+		return "Customer{" +
+				"id=" + id +
+				", tcNo='" + tcNo + '\'' +
+				", eklemeTarihi='" + eklemeTarihi + '\'' +
+				", isim='" + isim + '\'' +
+				", soyisim='" + soyisim + '\'' +
+				", telefon='" + telefon + '\'' +
+				'}';
+	}
 }

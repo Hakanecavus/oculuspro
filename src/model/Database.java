@@ -9,28 +9,19 @@ import java.util.ArrayList;
 public class Database {
 
     // they store the search results
-    private ObservableList<ContactLens> searchResultLens;
-    private ObservableList<Customer> searchResultCustomer = FXCollections.observableArrayList();
-    private ObservableList<Extra> searchResultExtra;
-    private ObservableList<Frame> searchResultFrame;
-    private ObservableList<Glass> searchResultGlass;
-    private ObservableList<Prescription> searchResultPrescription;
-    private ObservableList<Sale> searchResultSale;
-    private ObservableList<Special> searchResultSpecial;
-    private ObservableList<Object> searchResultAll;
+    private ObservableList<ContactLens> lenses;
+    private ObservableList<Customer> customers;
+    private ObservableList<Extra> extras;
+    private ObservableList<Frame> frames;
+    private ObservableList<Glass> glasses;
+    private ObservableList<PrescriptionCam> prescriptionCams;
+    private ObservableList<PrescriptionLens> prescriptionLenses;
+    private ObservableList<Sale> sales;
+    private ObservableList<Special> specials;
+    private ObservableList<Object> objects;
+    private ArrayList<String> userList;
 
-    // they store the data which came from database
-    private ArrayList<ContactLens> contactLensList;
-    private ArrayList<Customer> customerList;
-    private ArrayList<Extra> extraList;
-    private ArrayList<Frame> frameList;
-    private ArrayList<Glass> glassList;
-    private ArrayList<Prescription> prescriptionList;
-    private ArrayList<Record> recordList;
-    private ArrayList<Sale> saleList;
-    private ArrayList<Special> specialList;
-
-    // they store column names for each table
+    // Stores column names
     private ArrayList<String> contactLensColumnName;
     private ArrayList<String> customerColumnName;
     private ArrayList<String> extraColumnName;
@@ -40,26 +31,12 @@ public class Database {
     private ArrayList<String> recordColumnName;
     private ArrayList<String> saleColumnName;
     private ArrayList<String> specialColumnName;
-    private ArrayList<String> userList;
 
     private String url = "jdbc:sqlite:database.db";
     private Connection con = null;
-//	private PreparedStatement ps = null;
-//	private ResultSet rs = null;
-    // private ResultSetMetaData rsmt;
 
     public Database() {
 
-        contactLensList = new ArrayList<ContactLens>();
-        customerList = new ArrayList<Customer>();
-        extraList = new ArrayList<Extra>();
-        frameList = new ArrayList<Frame>();
-        glassList = new ArrayList<Glass>();
-        prescriptionList = new ArrayList<Prescription>();
-        recordList = new ArrayList<Record>();
-        saleList = new ArrayList<Sale>();
-        specialList = new ArrayList<Special>();
-        userList = new ArrayList<String>();
 
         contactLensColumnName = new ArrayList<String>();
         customerColumnName = new ArrayList<String>();
@@ -71,100 +48,41 @@ public class Database {
         saleColumnName = new ArrayList<String>();
         specialColumnName = new ArrayList<String>();
 
-        searchResultLens = FXCollections.observableArrayList();
-        searchResultCustomer = FXCollections.observableArrayList();
-        searchResultExtra = FXCollections.observableArrayList();
-        searchResultFrame = FXCollections.observableArrayList();
-        searchResultGlass = FXCollections.observableArrayList();
-        searchResultPrescription = FXCollections.observableArrayList();
-        searchResultSale = FXCollections.observableArrayList();
-        searchResultSpecial = FXCollections.observableArrayList();
-        searchResultAll = FXCollections.observableArrayList();
+        lenses = FXCollections.observableArrayList();
+        customers = FXCollections.observableArrayList();
+        extras = FXCollections.observableArrayList();
+        frames = FXCollections.observableArrayList();
+        glasses = FXCollections.observableArrayList();
+        prescriptionCams = FXCollections.observableArrayList();
+        prescriptionLenses = FXCollections.observableArrayList();
+        sales = FXCollections.observableArrayList();
+        specials = FXCollections.observableArrayList();
+        userList = new ArrayList<String>();
 
         connect();
-        createDatabaseFile();
+
+
+//        createDatabaseFile(); // TODO: fill method
     }
 
     public void createDatabaseFile() {
         PreparedStatement ps = null;
         try {
-            ps = con.prepareStatement("CREATE TABLE IF NOT EXISTS \"contact_lenses\" (\n" +
-                    "\t\"id_contact\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
-                    "\t\"barcode\"\tTEXT UNIQUE,\n" +
-                    "\t\"renk\"\tTEXT,\n" +
-                    "\t\"ozel_adi\"\tTEXT,\n" +
-                    "\t\"multifokal\"\tREAL,\n" +
-                    "\t\"temel_egri\"\tREAL,\n" +
-                    "\t\"diyoptri\"\tREAL,\n" +
-                    "\t\"aks\"\tREAL,\n" +
-                    "\t\"silindirik\"\tREAL,\n" +
-                    "\t\"tum_cap\"\tREAL,\n" +
-                    "\t\"ekleme_tarihi\"\tTEXT,\n" +
-                    "\t\"alis_fiyati\"\tINTEGER DEFAULT 0,\n" +
-                    "\t\"satis_fiyati\"\tINTEGER DEFAULT 0,\n" +
-                    "\t\"quantity\"\tINTEGER DEFAULT 0\n" +
-                    ");");
+            ps = con.prepareStatement("");
             ps.executeUpdate();
 
-            ps = con.prepareStatement("CREATE TABLE IF NOT EXISTS \"customer\" (\n" +
-                    "\t\"id_customer\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
-                    "\t\"tckn\"\tTEXT UNIQUE,\n" +
-                    "\t\"ekleme_tarihi\"\tTEXT,\n" +
-                    "\t\"isim\"\tTEXT,\n" +
-                    "\t\"soyisim\"\tTEXT,\n" +
-                    "\t\"telefon\"\tTEXT\n" +
-                    ");");
+            ps = con.prepareStatement("");
 
             ps.executeUpdate();
-            ps = con.prepareStatement("CREATE TABLE IF NOT EXISTS \"extras\" (\n" +
-                    "\t\"id_extras\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
-                    "\t\"barcode\"\tTEXT UNIQUE,\n" +
-                    "\t\"alis_fiyati\"\tREAL DEFAULT 0,\n" +
-                    "\t\"aciklama\"\tTEXT,\n" +
-                    "\t\"ekleme_tarihi\"\tTEXT,\n" +
-                    "\t\"satis_fiyati\"\tREAL DEFAULT 0,\n" +
-                    "\t\"quantity\"\tINTEGER DEFAULT 0\n" +
-                    ")");
+            ps = con.prepareStatement("");
             ps.executeUpdate();
 
-            ps = con.prepareStatement("CREATE TABLE IF NOT EXISTS \"frames\" (\n" +
-                    "\t\"id_frame\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
-                    "\t\"barcode\"\tTEXT,\n" +
-                    "\t\"marka\"\tTEXT,\n" +
-                    "\t\"model\"\tTEXT,\n" +
-                    "\t\"alis_fiyati\"\tREAL,\n" +
-                    "\t\"satis_fiyati\"\tREAL,\n" +
-                    "\t\"renk\"\tTEXT,\n" +
-                    "\t\"ekartman\"\tTEXT,\n" +
-                    "\t\"ekleme_tarihi\"\tTEXT,\n" +
-                    "\t\"ozel_adi\"\tTEXT,\n" +
-                    "\t\"quantity\"\tINTEGER DEFAULT 0\n" +
-                    ")");
+            ps = con.prepareStatement("");
             ps.executeUpdate();
 
-            ps = con.prepareStatement("CREATE TABLE IF NOT EXISTS \"glass\" (\n" +
-                    "\t\"id_glass\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
-                    "\t\"barcode\"\tTEXT UNIQUE,\n" +
-                    "\t\"tip\"\tTEXT,\n" +
-                    "\t\"silendirik\"\tREAL,\n" +
-                    "\t\"tur\"\tTEXT,\n" +
-                    "\t\"alis_fiyati\"\tREAL,\n" +
-                    "\t\"satis_fiyati\"\tREAL,\n" +
-                    "\t\"sferik\"\tREAL,\n" +
-                    "\t\"marka\"\tTEXT,\n" +
-                    "\t\"aks\"\tREAL,\n" +
-                    "\t\"ekleme_tarihi\"\tTEXT,\n" +
-                    "\t\"quantity\"\tINTEGER DEFAULT 0\n" +
-                    ")");
+            ps = con.prepareStatement("");
             ps.executeUpdate();
-            ps = con.prepareStatement("CREATE TABLE IF NOT EXISTS \"prescription\" (\n" +
-                    "\t\"id_prescription\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
-                    "\t\"recete_no\"\tTEXT UNIQUE,\n" +
-                    "\t\"olusturma_tarihi\"\tTEXT,\n" +
-                    "\t\"basvuru_tarihi\"\tTEXT,\n" +
-                    "\t\"teslim_tarihi\"\tTEXT,\n" +
-                    "\t\"sigorta_durumu\"\tTEXT\n" +
-                    ")");
+            ps = con.prepareStatement("");
             ps.executeUpdate();
             ps = con.prepareStatement("CREATE TABLE IF NOT EXISTS \"record\" (\n" +
                     "\t\"id\"\tINTEGER PRIMARY KEY AUTOINCREMENT,\n" +
@@ -172,29 +90,11 @@ public class Database {
                     "\t\"sale_id\"\tINTEGER\n" +
                     ")");
             ps.executeUpdate();
-            ps = con.prepareStatement("CREATE TABLE IF NOT EXISTS \"sale\" (\n" +
-                    "\t\"id_sale\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n" +
-                    "\t\"toplam_fiyat\"\tREAL DEFAULT 0,\n" +
-                    "\t\"indirim\"\tREAL DEFAULT 0,\n" +
-                    "\t\"ekleme_tarihi\"\tTEXT,\n" +
-                    "\t\"tc_no\"\tTEXT,\n" +
-                    "\t\"recete_no\"\tTEXT\n" +
-                    ")");
+            ps = con.prepareStatement("");
             ps.executeUpdate();
-            ps = con.prepareStatement("CREATE TABLE IF NOT EXISTS \"special\" (\n" +
-                    "\t\"id_special\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
-                    "\t\"barcode\"\tTEXT UNIQUE,\n" +
-                    "\t\"urun_adi\"\tTEXT,\n" +
-                    "\t\"ekleme_tarihi\"\tTEXT,\n" +
-                    "\t\"alis_fiyati\"\tREAL,\n" +
-                    "\t\"satis_fiyati\"\tREAL,\n" +
-                    "\t\"quantity\"\tINTEGER DEFAULT 0\n" +
-                    ")");
+            ps = con.prepareStatement("");
             ps.executeUpdate();
-            ps = con.prepareStatement("CREATE TABLE IF NOT EXISTS \"users\" (\n" +
-                    "\t\"username\"\tTEXT UNIQUE,\n" +
-                    "\t\"password\"\tTEXT\n" +
-                    ")");
+            ps = con.prepareStatement("");
             ps.executeUpdate();
 //            ps = con.prepareStatement("INSERT INTO users(username,password) \n" +
 //                    "SELECT 'ceylanoptik', 'ceylan123'\n" +
@@ -209,7 +109,7 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error");
-        }finally {
+        } finally {
 
             try {
                 ps.close();
@@ -218,20 +118,15 @@ public class Database {
             }
         }
     }
-
-    public ArrayList<ContactLens> readContactLenses() throws SQLException {
+//////////////////////////////////////// Read methods //////////////////////////////////////////////////////////////////
+    public ObservableList<ContactLens> readContactLenses() throws SQLException {
 
         int id;
         String barcode;
-        double multifokal;
-        double temelEgri;
-        double diyoptri;
-        double aks;
-        double silindirik;
-        double tumCap;
-        String renk;
-        String ozelAdi;
-        String eklemeTarihi;
+        String diyoptri;
+        String aks;
+        String silindirik;
+        String tarih;
         double alisFiyati;
         double satisFiyati;
         int quantity;
@@ -239,7 +134,7 @@ public class Database {
         if (con == null) {
             connect();
         }
-        contactLensList.clear();
+        lenses.clear();
 
         PreparedStatement ps = con.prepareStatement("select * from contact_lenses");
         ResultSet rs = ps.executeQuery();
@@ -253,30 +148,24 @@ public class Database {
 
                 id = rs.getInt("id_contact");
                 barcode = rs.getString("barcode");
-                multifokal = rs.getDouble("multifokal");
-                temelEgri = rs.getDouble("temel_egri");
-                diyoptri = rs.getDouble("diyoptri");
-                aks = rs.getDouble("aks");
-                silindirik = rs.getDouble("silindirik");
-                tumCap = rs.getDouble("tum_cap");
-                renk = rs.getString("renk");
-                ozelAdi = rs.getString("ozel_adi");
-                eklemeTarihi = rs.getString("ekleme_tarihi");
+                diyoptri = rs.getString("diyoptri");
+                aks = rs.getString("aks");
+                silindirik = rs.getString("silindirik");
+                tarih = rs.getString("ekleme_tarihi");
                 alisFiyati = rs.getDouble("alis_fiyati");
                 satisFiyati = rs.getDouble("satis_fiyati");
                 quantity = rs.getInt("quantity");
 
-                ContactLens contactLens = new ContactLens(id, barcode, multifokal, temelEgri, diyoptri, aks, silindirik,
-                        tumCap, renk, ozelAdi, eklemeTarihi, alisFiyati, satisFiyati, quantity);
-                contactLensList.add(contactLens);
+                ContactLens contactLens = new ContactLens(id,barcode,diyoptri,aks,silindirik,tarih,alisFiyati,satisFiyati,quantity);
+                lenses.add(contactLens);
             } while (rs.next());
         }
         ps.close();
         rs.close();
-        return contactLensList;
+        return lenses;
     }
 
-    public ArrayList<Customer> readCustomers() throws SQLException {
+    public ObservableList<Customer> readCustomers() throws SQLException {
 
         int id;
         String tcNo;
@@ -289,7 +178,7 @@ public class Database {
             connect();
         }
 
-        customerList.clear();
+        customers.clear();
 
         PreparedStatement statement = con.prepareStatement("select * from customer");
         ResultSet rs = statement.executeQuery();
@@ -301,22 +190,22 @@ public class Database {
 
                 id = rs.getInt("id_customer");
                 tcNo = rs.getString("tckn");
-                eklemeTarihi = rs.getString("ekleme_tarihi");
+                eklemeTarihi = rs.getString("tarih");
                 isim = rs.getString("isim");
                 soyisim = rs.getString("soyisim");
                 telefon = rs.getString("telefon");
 
                 Customer customer = new Customer(id, tcNo, eklemeTarihi, isim, soyisim, telefon);
-                customerList.add(customer);
+                customers.add(customer);
             } while (rs.next());
         }
         statement.close();
         rs.close();
 
-        return customerList;
+        return customers;
     }
 
-    public ArrayList<Extra> readExtras() throws SQLException {
+    public ObservableList<Extra> readExtras() throws SQLException {
 
         int id;
         String barcode;
@@ -327,7 +216,7 @@ public class Database {
         if (con == null) {
             connect();
         }
-        extraList.clear();
+        extras.clear();
         PreparedStatement ps = con.prepareStatement("select * from extras");
 
         ResultSet rs = ps.executeQuery();
@@ -343,17 +232,17 @@ public class Database {
                 eklemeTarihi = rs.getString("ekleme_tarihi");
 
                 Extra extra = new Extra(id, barcode, ozelAdi, eklemeTarihi, satisFiyati);
-                extraList.add(extra);
+                extras.add(extra);
             } while (rs.next());
         }
 
         ps.close();
         rs.close();
 
-        return extraList;
+        return extras;
     }
 
-    public ArrayList<Frame> readFrames() throws SQLException {
+    public ObservableList<Frame> readFrames() throws SQLException {
 
         int id;
         String barcode;
@@ -370,7 +259,7 @@ public class Database {
         if (con == null) {
             connect();
         }
-        frameList.clear();
+        frames.clear();
 
         PreparedStatement ps = con.prepareStatement("select * from frames");
         ResultSet rs = ps.executeQuery();
@@ -394,14 +283,14 @@ public class Database {
 
                 Frame frame = new Frame(id, barcode, alisFiyati, satisFiyati, renk, marka, model, ozelAdi, ekartman,
                         eklemeTarihi, quantity);
-                frameList.add(frame);
+                frames.add(frame);
             } while (rs.next());
         }
 
         ps.close();
         rs.close();
 
-        return frameList;
+        return frames;
     }
 
     public ArrayList<Glass> readGlasses() throws SQLException {
@@ -410,20 +299,17 @@ public class Database {
         String barcode;
         double alisFiyati;
         double satisFiyati;
-        double silendirik;
-        double sferik;
         String tur;
         String marka;
-        String tip;
-        int aks;
-        String eklemeTarihi;
+        String index;
+        String tarih;
         int quantity;
 
         if (con == null) {
             connect();
         }
 
-        glassList.clear();
+        glasses.clear();
 
         PreparedStatement ps = con.prepareStatement("select * from glass");
         ResultSet rs = ps.executeQuery();
@@ -438,18 +324,13 @@ public class Database {
                 barcode = rs.getString("barcode");
                 alisFiyati = rs.getDouble("alis_fiyati");
                 satisFiyati = rs.getDouble("satis_fiyati");
-                silendirik = rs.getDouble("silendirik");
-                sferik = rs.getDouble("sferik");
                 tur = rs.getString("tur");
                 marka = rs.getString("marka");
-                tip = rs.getString("tip");
-                aks = rs.getInt("aks");
-                eklemeTarihi = rs.getString("ekleme_tarihi");
+                tarih = rs.getString("ekleme_tarihi");
                 quantity = rs.getInt("quantity");
-
-                Glass glass = new Glass(id, barcode, alisFiyati, satisFiyati, silendirik, sferik, tur, marka, tip, aks,
-                        eklemeTarihi, quantity);
-                glassList.add(glass);
+                index = rs.getString("index");
+                Glass glass = new Glass();
+                glasses.add(glass);
             } while (rs.next());
         }
 
@@ -457,10 +338,10 @@ public class Database {
         ps.close();
         rs.close();
 
-        return glassList;
+        return glasses;
     }
 
-    public ArrayList<Prescription> readPrescriptions() throws SQLException {
+    public ArrayList<PrescriptionCam> readPrescriptions() throws SQLException {
 
         int id;
         String receteNo;
@@ -490,7 +371,7 @@ public class Database {
                 teslimTarihi = rs.getString("teslim_tarihi");
                 sigortaDurumu = rs.getString("sigorta_durumu");
 
-                Prescription prescription = new Prescription(id, receteNo, olusturmaTarihi, basvuruTarihi, teslimTarihi,
+                PrescriptionCam prescription = new PrescriptionCam(id, receteNo, olusturmaTarihi, basvuruTarihi, teslimTarihi,
                         sigortaDurumu);
                 prescriptionList.add(prescription);
 
@@ -1381,7 +1262,7 @@ public class Database {
         return searchResultGlass;
     }
 
-    public ObservableList<Prescription> searchPrescriptions(String searchReceteNo) throws SQLException {
+    public ObservableList<PrescriptionCam> searchPrescriptions(String searchReceteNo) throws SQLException {
 
         int id;
         String receteNo;
@@ -1411,7 +1292,7 @@ public class Database {
                 teslimTarihi = rs.getString("teslim_tarihi");
                 sigortaDurumu = rs.getString("sigorta_durumu");
 
-                Prescription prescription = new Prescription(id, receteNo, olusturmaTarihi, basvuruTarihi, teslimTarihi,
+                PrescriptionCam prescription = new PrescriptionCam(id, receteNo, olusturmaTarihi, basvuruTarihi, teslimTarihi,
                         sigortaDurumu);
                 searchResultPrescription.add(prescription);
             } while (rs.next());

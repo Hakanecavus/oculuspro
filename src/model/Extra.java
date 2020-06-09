@@ -4,32 +4,23 @@ public class Extra {
 
 	private int id;
 	private String barcode;
-	private String ozelAdi;
-	private String eklemeTarihi;
-	private double satisFiyati;
+	private String aciklama;
+	private String tarih;
+	private double fiyat;
 
-	public Extra() {
-		// TODO Auto-generated constructor stub
-	}
-	public Extra( String ozelAdi, double satisFiyati) {
-		super();
-		this.ozelAdi = ozelAdi;
-		this.satisFiyati = satisFiyati;
-	}
-	public Extra(String barcode, String ozelAdi, double satisFiyati) {
-		super();
+	public Extra(String barcode, String aciklama, String tarih, double fiyat) {
 		this.barcode = barcode;
-		this.ozelAdi = ozelAdi;
-		this.satisFiyati = satisFiyati;
+		this.aciklama = aciklama;
+		this.tarih = tarih;
+		this.fiyat = fiyat;
 	}
 
-	public Extra(int id, String barcode, String ozelAdi, String eklemeTarihi, double satisFiyati) {
-		super();
+	public Extra(int id, String barcode, String aciklama, String tarih, double fiyat) {
 		this.id = id;
 		this.barcode = barcode;
-		this.ozelAdi = ozelAdi;
-		this.eklemeTarihi = eklemeTarihi;
-		this.satisFiyati = satisFiyati;
+		this.aciklama = aciklama;
+		this.tarih = tarih;
+		this.fiyat = fiyat;
 	}
 
 	public int getId() {
@@ -48,29 +39,39 @@ public class Extra {
 		this.barcode = barcode;
 	}
 
-
-	public String getOzelAdi() {
-		return ozelAdi;
+	public String getAciklama() {
+		return aciklama;
 	}
 
-	public void setOzelAdi(String ozelAdi) {
-		this.ozelAdi = ozelAdi;
+	public void setAciklama(String aciklama) {
+		this.aciklama = aciklama;
 	}
 
-	public String getEklemeTarihi() {
-		return eklemeTarihi;
+	public String getTarih() {
+		return tarih;
 	}
 
-	public void setEklemeTarihi(String eklemeTarihi) {
-		this.eklemeTarihi = eklemeTarihi;
+	public void setTarih(String tarih) {
+		this.tarih = tarih;
 	}
 
-	public double getSatisFiyati() {
-		return satisFiyati;
+	public double getFiyat() {
+		return fiyat;
 	}
 
-	public void setSatisFiyati(double satisFiyati) {
-		this.satisFiyati = satisFiyati;
+	public void setFiyat(double fiyat) {
+		this.fiyat = fiyat;
+	}
+
+	@Override
+	public String toString() {
+		return "Extra{" +
+				"id=" + id +
+				", barcode='" + barcode + '\'' +
+				", aciklama='" + aciklama + '\'' +
+				", tarih='" + tarih + '\'' +
+				", fiyat=" + fiyat +
+				'}';
 	}
 
 }

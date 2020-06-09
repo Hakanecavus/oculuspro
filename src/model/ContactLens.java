@@ -4,107 +4,36 @@ public class ContactLens {
 
 	private int id;
 	private String barcode;
-	private double multifokal;
-	private double temelEgri;
-	private double diyoptri;
-	private double aks;
-	private double silindirik;
-	private double tumCap;
-	private String renk;
-	private String ozelAdi;
-	private String eklemeTarihi;
+	private String diyoptri;
+	private String aks;
+	private String silindirik;
+	private String tarih;
 	private double alisFiyati;
 	private double satisFiyati;
 	private int quantity;
 	private int saleId;
-	
-	
-	
-	public ContactLens() {
 
-	}
-
-	public ContactLens(String barcode, double multifokal, double temelEgri, double diyoptri, double aks,
-			double silindirik, double tumCap, String renk, String ozelAdi, double alisFiyati,
-			double satisFiyati, int quantity) {
-		super();
+	public ContactLens(String barcode, String diyoptri, String aks, String silindirik, String tarih, double alisFiyati, double satisFiyati, int quantity) {
 		this.barcode = barcode;
-		this.multifokal = multifokal;
-		this.temelEgri = temelEgri;
 		this.diyoptri = diyoptri;
 		this.aks = aks;
 		this.silindirik = silindirik;
-		this.tumCap = tumCap;
-		this.renk = renk;
-		this.ozelAdi = ozelAdi;
+		this.tarih = tarih;
 		this.alisFiyati = alisFiyati;
 		this.satisFiyati = satisFiyati;
 		this.quantity = quantity;
 	}
 
-	public ContactLens(int id, String barcode, double multifokal, double temelEgri, double diyoptri, double aks,
-			double silindirik, double tumCap, String renk, String ozelAdi, String eklemeTarihi, double alisFiyati,
-			double satisFiyati, int quantity) {
-		super();
+	public ContactLens(int id, String barcode, String diyoptri, String aks, String silindirik, String tarih, double alisFiyati, double satisFiyati, int quantity) {
 		this.id = id;
 		this.barcode = barcode;
-		this.multifokal = multifokal;
-		this.temelEgri = temelEgri;
 		this.diyoptri = diyoptri;
 		this.aks = aks;
 		this.silindirik = silindirik;
-		this.tumCap = tumCap;
-		this.renk = renk;
-		this.ozelAdi = ozelAdi;
-		this.eklemeTarihi = eklemeTarihi;
+		this.tarih = tarih;
 		this.alisFiyati = alisFiyati;
 		this.satisFiyati = satisFiyati;
 		this.quantity = quantity;
-	}
-
-	public ContactLens(int id, String barcode, double multifokal, double temelEgri, double diyoptri, double aks,
-			double silindirik, double tumCap, String renk, String ozelAdi, String eklemeTarihi, double alisFiyati,
-			double satisFiyati, int quantity, int saleId) {
-		super();
-		this.id = id;
-		this.barcode = barcode;
-		this.multifokal = multifokal;
-		this.temelEgri = temelEgri;
-		this.diyoptri = diyoptri;
-		this.aks = aks;
-		this.silindirik = silindirik;
-		this.tumCap = tumCap;
-		this.renk = renk;
-		this.ozelAdi = ozelAdi;
-		this.eklemeTarihi = eklemeTarihi;
-		this.alisFiyati = alisFiyati;
-		this.satisFiyati = satisFiyati;
-		this.quantity = quantity;
-		this.saleId = saleId;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public int getSaleId() {
-		return saleId;
-	}
-
-	public void setSaleId(int saleId) {
-		this.saleId = saleId;
-	}
-
-	public int getMiktar() {
-		return quantity;
-	}
-
-	public void setMiktar(int miktar) {
-		this.quantity = miktar;
 	}
 
 	public int getId() {
@@ -123,76 +52,36 @@ public class ContactLens {
 		this.barcode = barcode;
 	}
 
-	public double getMultifokal() {
-		return multifokal;
-	}
-
-	public void setMultifokal(double multifokal) {
-		this.multifokal = multifokal;
-	}
-
-	public double getTemelEgri() {
-		return temelEgri;
-	}
-
-	public void setTemelEgri(double temelEgri) {
-		this.temelEgri = temelEgri;
-	}
-
-	public double getDiyoptri() {
+	public String getDiyoptri() {
 		return diyoptri;
 	}
 
-	public void setDiyoptri(double diyoptri) {
+	public void setDiyoptri(String diyoptri) {
 		this.diyoptri = diyoptri;
 	}
 
-	public double getAks() {
+	public String getAks() {
 		return aks;
 	}
 
-	public void setAks(double aks) {
+	public void setAks(String aks) {
 		this.aks = aks;
 	}
 
-	public double getSilindirik() {
+	public String getSilindirik() {
 		return silindirik;
 	}
 
-	public void setSilindirik(double silindirik) {
+	public void setSilindirik(String silindirik) {
 		this.silindirik = silindirik;
 	}
 
-	public double getTumCap() {
-		return tumCap;
+	public String getTarih() {
+		return tarih;
 	}
 
-	public void setTumCap(double tumCap) {
-		this.tumCap = tumCap;
-	}
-
-	public String getRenk() {
-		return renk;
-	}
-
-	public void setRenk(String renk) {
-		this.renk = renk;
-	}
-
-	public String getOzelAdi() {
-		return ozelAdi;
-	}
-
-	public void setOzelAdi(String ozelAdi) {
-		this.ozelAdi = ozelAdi;
-	}
-
-	public String getEklemeTarihi() {
-		return eklemeTarihi;
-	}
-
-	public void setEklemeTarihi(String eklemeTarihi) {
-		this.eklemeTarihi = eklemeTarihi;
+	public void setTarih(String tarih) {
+		this.tarih = tarih;
 	}
 
 	public double getAlisFiyati() {
@@ -211,4 +100,35 @@ public class ContactLens {
 		this.satisFiyati = satisFiyati;
 	}
 
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public int getSaleId() {
+		return saleId;
+	}
+
+	public void setSaleId(int saleId) {
+		this.saleId = saleId;
+	}
+
+	@Override
+	public String toString() {
+		return "ContactLens{" +
+				"id=" + id +
+				", barcode='" + barcode + '\'' +
+				", diyoptri=" + diyoptri +
+				", aks=" + aks +
+				", silindirik=" + silindirik +
+				", tarih='" + tarih + '\'' +
+				", alisFiyati=" + alisFiyati +
+				", satisFiyati=" + satisFiyati +
+				", quantity=" + quantity +
+				", saleId=" + saleId +
+				'}';
+	}
 }

@@ -6,7 +6,7 @@ public class Special {
 	private String barcode;
 	private double alisFiyati;
 	private double satisFiyati;
-	private String ozelAdi;
+	private String urunAdi;
 	private String eklemeTarihi;
 	private int quantity;
 	private int saleId;
@@ -21,7 +21,7 @@ public class Special {
 		this.barcode = barcode;
 		this.alisFiyati = alisFiyati;
 		this.satisFiyati = satisFiyati;
-		this.ozelAdi = ozelAdi;
+		this.urunAdi = ozelAdi;
 		this.quantity = quantity;
 	}
 
@@ -33,7 +33,7 @@ public class Special {
 		this.barcode = barcode;
 		this.alisFiyati = alisFiyati;
 		this.satisFiyati = satisFiyati;
-		this.ozelAdi = ozelAdi;
+		this.urunAdi = ozelAdi;
 		this.eklemeTarihi = eklemeTarihi;
 		this.quantity = quantity;
 	}
@@ -46,7 +46,7 @@ public class Special {
 		this.barcode = barcode;
 		this.alisFiyati = alisFiyati;
 		this.satisFiyati = satisFiyati;
-		this.ozelAdi = ozelAdi;
+		this.urunAdi = ozelAdi;
 		this.eklemeTarihi = eklemeTarihi;
 		this.quantity = quantity;
 		this.saleId = saleId;
@@ -104,11 +104,11 @@ public class Special {
 	}
 
 	public String getOzelAdi() {
-		return ozelAdi;
+		return urunAdi;
 	}
 
 	public void setOzelAdi(String ozelAdi) {
-		this.ozelAdi = ozelAdi;
+		this.urunAdi = ozelAdi;
 	}
 
 	public String getEklemeTarihi() {
@@ -119,4 +119,17 @@ public class Special {
 		this.eklemeTarihi = eklemeTarihi;
 	}
 
+	@Override
+	public String toString() {
+		return "Special{" +
+				"id=" + id +
+				", barcode='" + barcode + '\'' +
+				", alisFiyati=" + alisFiyati +
+				", satisFiyati=" + satisFiyati +
+				", urunAdi='" + urunAdi + '\'' +
+				", eklemeTarihi='" + eklemeTarihi + '\'' +
+				", quantity=" + quantity +
+				", saleId=" + saleId +
+				'}';
+	}
 }

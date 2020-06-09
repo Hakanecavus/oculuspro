@@ -6,97 +6,36 @@ public class Glass {
 	private String barcode;
 	private double alisFiyati;
 	private double satisFiyati;
-	private double silendirik;
-	private double sferik;
 	private String tur;
 	private String marka;
-	private String tip;
-	private int aks;
-	private String eklemeTarihi;
+	private String index;
+	private String tarih;
 	private int quantity;
 	private int saleId;
 
-	public Glass() {
-		// TODO Auto-generated constructor stub
-	}
-
-	
-
-	public Glass(String barcode, double alisFiyati, double satisFiyati, double silendirik, double sferik, String tur,
-			String marka, String tip, int aks, int quantity) {
-		super();
+	public Glass(String barcode, double alisFiyati, double satisFiyati, String tur, String marka, String index, String tarih, int quantity) {
 		this.barcode = barcode;
 		this.alisFiyati = alisFiyati;
 		this.satisFiyati = satisFiyati;
-		this.silendirik = silendirik;
-		this.sferik = sferik;
 		this.tur = tur;
 		this.marka = marka;
-		this.tip = tip;
-		this.aks = aks;
+		this.index = index;
+		this.tarih = tarih;
 		this.quantity = quantity;
 	}
 
-
-
-	public Glass(int id, String barcode, double alisFiyati, double satisFiyati, double silendirik, double sferik,
-			String tur, String marka, String tip, int aks, String eklemeTarihi, int quantity) {
-		super();
+	public Glass(int id, String barcode, double alisFiyati, double satisFiyati, String tur, String marka, String index, String tarih, int quantity, int saleId) {
 		this.id = id;
 		this.barcode = barcode;
 		this.alisFiyati = alisFiyati;
 		this.satisFiyati = satisFiyati;
-		this.silendirik = silendirik;
-		this.sferik = sferik;
 		this.tur = tur;
 		this.marka = marka;
-		this.tip = tip;
-		this.aks = aks;
-		this.eklemeTarihi = eklemeTarihi;
-		this.quantity = quantity;
-	}
-
-
-	public Glass(int id, String barcode, double alisFiyati, double satisFiyati, double silendirik, double sferik,
-			String tur, String marka, String tip, int aks, String eklemeTarihi, int quantity, int saleId) {
-		super();
-		this.id = id;
-		this.barcode = barcode;
-		this.alisFiyati = alisFiyati;
-		this.satisFiyati = satisFiyati;
-		this.silendirik = silendirik;
-		this.sferik = sferik;
-		this.tur = tur;
-		this.marka = marka;
-		this.tip = tip;
-		this.aks = aks;
-		this.eklemeTarihi = eklemeTarihi;
+		this.index = index;
+		this.tarih = tarih;
 		this.quantity = quantity;
 		this.saleId = saleId;
 	}
-
-
-
-	public int getSaleId() {
-		return saleId;
-	}
-
-
-	public void setSaleId(int saleId) {
-		this.saleId = saleId;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-
 
 	public int getId() {
 		return id;
@@ -130,22 +69,6 @@ public class Glass {
 		this.satisFiyati = satisFiyati;
 	}
 
-	public double getSilendirik() {
-		return silendirik;
-	}
-
-	public void setSilendirik(double silendirik) {
-		this.silendirik = silendirik;
-	}
-
-	public double getSferik() {
-		return sferik;
-	}
-
-	public void setSferik(double sferik) {
-		this.sferik = sferik;
-	}
-
 	public String getTur() {
 		return tur;
 	}
@@ -162,28 +85,51 @@ public class Glass {
 		this.marka = marka;
 	}
 
-	public String getTip() {
-		return tip;
+	public String getIndex() {
+		return index;
 	}
 
-	public void setTip(String tip) {
-		this.tip = tip;
+	public void setIndex(String index) {
+		this.index = index;
 	}
 
-	public int getAks() {
-		return aks;
+	public String getTarih() {
+		return tarih;
 	}
 
-	public void setAks(int aks) {
-		this.aks = aks;
+	public void setTarih(String tarih) {
+		this.tarih = tarih;
 	}
 
-	public String getEklemeTarihi() {
-		return eklemeTarihi;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setEklemeTarihi(String eklemeTarihi) {
-		this.eklemeTarihi = eklemeTarihi;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
+	public int getSaleId() {
+		return saleId;
+	}
+
+	public void setSaleId(int saleId) {
+		this.saleId = saleId;
+	}
+
+	@Override
+	public String toString() {
+		return "Glass{" +
+				"id=" + id +
+				", barcode='" + barcode + '\'' +
+				", alisFiyati=" + alisFiyati +
+				", satisFiyati=" + satisFiyati +
+				", tur='" + tur + '\'' +
+				", marka='" + marka + '\'' +
+				", index='" + index + '\'' +
+				", tarih='" + tarih + '\'' +
+				", quantity=" + quantity +
+				", saleId=" + saleId +
+				'}';
+	}
 }

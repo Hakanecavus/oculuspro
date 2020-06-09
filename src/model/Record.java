@@ -44,4 +44,12 @@ public class Record {
 		this.saleId = saleId;
 	}
 
+	@Override
+	public String toString() {
+		return "Record{" +
+				"id=" + id +
+				", productBarcode='" + productBarcode + '\'' +
+				", saleId=" + saleId +
+				'}';
+	}
 }
