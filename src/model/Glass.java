@@ -24,7 +24,7 @@ public class Glass {
 		this.quantity = quantity;
 	}
 
-	public Glass(int id, String barcode, double alisFiyati, double satisFiyati, String tur, String marka, String index, String tarih, int quantity, int saleId) {
+	public Glass(int id, String barcode, double alisFiyati, double satisFiyati, String tur, String marka, String index, String tarih, int quantity) {
 		this.id = id;
 		this.barcode = barcode;
 		this.alisFiyati = alisFiyati;
@@ -34,7 +34,6 @@ public class Glass {
 		this.index = index;
 		this.tarih = tarih;
 		this.quantity = quantity;
-		this.saleId = saleId;
 	}
 
 	public int getId() {

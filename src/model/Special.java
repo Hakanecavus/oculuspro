@@ -11,10 +11,6 @@ public class Special {
 	private int quantity;
 	private int saleId;
 
-	public Special() {
-
-	}
-
 
 	public Special(String barcode, double alisFiyati, double satisFiyati, String ozelAdi, int quantity) {
 		super();

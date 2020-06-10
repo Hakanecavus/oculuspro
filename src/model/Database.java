@@ -16,6 +16,7 @@ public class Database {
     private ObservableList<Glass> glasses;
     private ObservableList<PrescriptionCam> prescriptionCams;
     private ObservableList<PrescriptionLens> prescriptionLenses;
+    private ObservableList<Record> records;
     private ObservableList<Sale> sales;
     private ObservableList<Special> specials;
     private ObservableList<Object> objects;
@@ -55,6 +56,7 @@ public class Database {
         glasses = FXCollections.observableArrayList();
         prescriptionCams = FXCollections.observableArrayList();
         prescriptionLenses = FXCollections.observableArrayList();
+        records = FXCollections.observableArrayList();
         sales = FXCollections.observableArrayList();
         specials = FXCollections.observableArrayList();
         userList = new ArrayList<String>();
@@ -118,7 +120,8 @@ public class Database {
             }
         }
     }
-//////////////////////////////////////// Read methods //////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////// Read methods //////////////////////////////////////////////////////////////////
     public ObservableList<ContactLens> readContactLenses() throws SQLException {
 
         int id;
@@ -151,12 +154,12 @@ public class Database {
                 diyoptri = rs.getString("diyoptri");
                 aks = rs.getString("aks");
                 silindirik = rs.getString("silindirik");
-                tarih = rs.getString("ekleme_tarihi");
+                tarih = rs.getString("tarih");
                 alisFiyati = rs.getDouble("alis_fiyati");
                 satisFiyati = rs.getDouble("satis_fiyati");
                 quantity = rs.getInt("quantity");
 
-                ContactLens contactLens = new ContactLens(id,barcode,diyoptri,aks,silindirik,tarih,alisFiyati,satisFiyati,quantity);
+                ContactLens contactLens = new ContactLens(id, barcode, diyoptri, aks, silindirik, tarih, alisFiyati, satisFiyati, quantity);
                 lenses.add(contactLens);
             } while (rs.next());
         }
@@ -293,7 +296,7 @@ public class Database {
         return frames;
     }
 
-    public ArrayList<Glass> readGlasses() throws SQLException {
+    public ObservableList<Glass> readGlasses() throws SQLException {
 
         int id;
         String barcode;
@@ -326,10 +329,10 @@ public class Database {
                 satisFiyati = rs.getDouble("satis_fiyati");
                 tur = rs.getString("tur");
                 marka = rs.getString("marka");
-                tarih = rs.getString("ekleme_tarihi");
+                tarih = rs.getString("tarih");
                 quantity = rs.getInt("quantity");
                 index = rs.getString("index");
-                Glass glass = new Glass();
+                Glass glass = new Glass(id, barcode, alisFiyati, satisFiyati, tur, marka, index, tarih, quantity);
                 glasses.add(glass);
             } while (rs.next());
         }
@@ -341,22 +344,32 @@ public class Database {
         return glasses;
     }
 
-    public ArrayList<PrescriptionCam> readPrescriptions() throws SQLException {
+    public ObservableList<PrescriptionCam> readPrescriptionsCam() throws SQLException {
 
         int id;
         String receteNo;
-        String olusturmaTarihi;
-        String basvuruTarihi;
-        String teslimTarihi;
-        String sigortaDurumu;
+        String receteTarihi;
+        String tarih;
+        String rcBarcode;
+        String rcSph;
+        String rcCyl;
+        String rcAx;
+        String rcPd;
+        String rcYukseklik;
+        String lcBarcode;
+        String lcSph;
+        String lcCyl;
+        String lcAx;
+        String lcPd;
+        String lcYukseklik;
 
         if (con == null) {
             connect();
         }
 
-        prescriptionList.clear();
+        prescriptionCams.clear();
 
-        PreparedStatement ps = con.prepareStatement("select * from prescription");
+        PreparedStatement ps = con.prepareStatement("select * from prescription_cam");
         ResultSet rs = ps.executeQuery();
 
         if (!rs.next()) {
@@ -366,14 +379,24 @@ public class Database {
             do {
                 id = rs.getInt("id_prescription");
                 receteNo = rs.getString("recete_no");
-                olusturmaTarihi = rs.getString("olusturma_tarihi");
-                basvuruTarihi = rs.getString("basvuru_tarihi");
-                teslimTarihi = rs.getString("teslim_tarihi");
-                sigortaDurumu = rs.getString("sigorta_durumu");
+                receteTarihi = rs.getString("recete_tarihi");
+                tarih = rs.getString("tarih");
+                rcBarcode = rs.getString("r_cam_barcode");
+                rcSph = rs.getString("r_cam_sph");
+                rcCyl = rs.getString("r_cam_cyl");
+                rcAx = rs.getString("r_cam_ax");
+                rcPd = rs.getString("r_cam_pd");
+                rcYukseklik = rs.getString("r_cam_yukseklik");
+                lcBarcode = rs.getString("l_cam_barcode");
+                lcSph = rs.getString("l_cam_sph");
+                lcCyl = rs.getString("l_cam_cyl");
+                lcAx = rs.getString("l_cam_ax");
+                lcPd = rs.getString("l_cam_pd");
+                lcYukseklik = rs.getString("l_cam_yukseklik");
 
-                PrescriptionCam prescription = new PrescriptionCam(id, receteNo, olusturmaTarihi, basvuruTarihi, teslimTarihi,
-                        sigortaDurumu);
-                prescriptionList.add(prescription);
+
+                PrescriptionCam prescription = new PrescriptionCam(id, receteNo, receteTarihi, tarih, rcBarcode, rcSph, rcCyl, rcAx, rcPd, rcYukseklik, lcBarcode, lcSph, lcCyl, lcAx, lcPd, lcYukseklik);
+                prescriptionCams.add(prescription);
 
             } while (rs.next());
         }
@@ -382,10 +405,77 @@ public class Database {
         ps.close();
         rs.close();
 
-        return prescriptionList;
+        return prescriptionCams;
     }
 
-    public ArrayList<Record> readRecord() throws SQLException {
+    public ObservableList<PrescriptionLens> readPrescriptionLens() throws SQLException {
+
+        int id;
+        String receteNo;
+        String receteTarihi;
+        String tarih;
+        String rlBarcode;
+        String rlTemelEgri;
+        String rlTumCap;
+        String rlTorik;
+        String rlMultifokal;
+        String rlRenk;
+        String rlOzelAd;
+        String llBarcode;
+        String llTemelEgri;
+        String llTumCap;
+        String llTorik;
+        String llMultifokal;
+        String llRenk;
+        String llOzelAd;
+
+        if (con == null) {
+            connect();
+        }
+
+        prescriptionLenses.clear();
+
+        PreparedStatement ps = con.prepareStatement("select * from prescription_lens");
+        ResultSet rs = ps.executeQuery();
+
+        if (!rs.next()) {
+            // TODO: empty
+            // System.out.println("Empty result");
+        } else {
+            do {
+                id = rs.getInt("id_prescription");
+                receteNo = rs.getString("recete_no");
+                receteTarihi = rs.getString("recete_tarihi");
+                tarih = rs.getString("tarih");
+                rlBarcode = rs.getString("r_lens_barcode");
+                rlTemelEgri = rs.getString("r_lens_temel_egri");
+                rlTumCap = rs.getString("r_lens_tum_cap");
+                rlTorik = rs.getString("r_lens_torik");
+                rlMultifokal = rs.getString("r_lens_multifokal");
+                rlRenk = rs.getString("r_lens_renk");
+                rlOzelAd = rs.getString("r_lens_ozel_ad");
+                llBarcode = rs.getString("l_lens_barcode");
+                llTemelEgri = rs.getString("l_lens_temel_egri");
+                llTumCap = rs.getString("l_lens_tum_cap");
+                llTorik = rs.getString("l_lens_torik");
+                llMultifokal = rs.getString("l_lens_multifokal");
+                llRenk = rs.getString("l_lens_renk");
+                llOzelAd = rs.getString("l_lens_ozel_ad");
+
+                PrescriptionLens prescriptionLens = new PrescriptionLens(id, receteNo, receteTarihi, tarih, rlBarcode, rlTemelEgri, rlTumCap, rlTorik, rlMultifokal, rlRenk, rlOzelAd, llBarcode, llTemelEgri, llTumCap, llTorik, llMultifokal, llRenk, llOzelAd);
+                prescriptionLenses.add(prescriptionLens);
+
+            } while (rs.next());
+        }
+
+
+        ps.close();
+        rs.close();
+
+        return prescriptionLenses;
+    }
+
+    public ObservableList<Record> readRecord() throws SQLException {
 
         int id;
         String productBarcode;
@@ -395,7 +485,7 @@ public class Database {
             connect();
         }
 
-        recordList.clear();
+        records.clear();
 
         PreparedStatement ps = con.prepareStatement("select * from record");
         ResultSet rs = ps.executeQuery();
@@ -410,7 +500,7 @@ public class Database {
                 saleId = rs.getInt("sale_id");
 
                 Record record = new Record(id, productBarcode, saleId);
-                recordList.add(record);
+                records.add(record);
 
             } while (rs.next());
         }
@@ -418,23 +508,26 @@ public class Database {
         ps.close();
         rs.close();
 
-        return recordList;
+        return records;
     }
 
-    public ArrayList<Sale> readSales() throws SQLException {
+    public ObservableList<Sale> readSales() throws SQLException {
 
         int id;
         double toplamFiyat;
-        double indirim;
-        String eklemeTarihi;
+        String tarih;
         String tcNo;
-        String receteNo;
+        String camReceteNo;
+        String lensReceteNo;
+        double sgk;
+        double kart;
+        double nakit;
 
         if (con == null) {
             connect();
         }
 
-        saleList.clear();
+        sales.clear();
 
         PreparedStatement ps = con.prepareStatement("select * from sale");
         ResultSet rs = ps.executeQuery();
@@ -445,22 +538,25 @@ public class Database {
             do {
                 id = rs.getInt("id_sale");
                 toplamFiyat = rs.getDouble("toplam_fiyat");
-                indirim = rs.getDouble("indirim");
-                eklemeTarihi = rs.getString("ekleme_tarihi");
+                tarih = rs.getString("tarih");
                 tcNo = rs.getString("tc_no");
-                receteNo = rs.getString("recete_no");
+                camReceteNo = rs.getString("cam_recete_no");
+                lensReceteNo = rs.getString("lens_recete_no");
+                sgk = rs.getDouble("sgk");
+                kart = rs.getDouble("kart");
+                nakit = rs.getDouble("nakit");
 
-                Sale sale = new Sale(id, toplamFiyat, indirim, eklemeTarihi, tcNo, receteNo);
-                saleList.add(sale);
+                Sale sale = new Sale(id, toplamFiyat, tarih, tcNo, camReceteNo, lensReceteNo, sgk, kart, nakit);
+                sales.add(sale);
             } while (rs.next());
         }
 
         ps.close();
         rs.close();
-        return saleList;
+        return sales;
     }
 
-    public ArrayList<Special> readSpecials() throws SQLException {
+    public ObservableList<Special> readSpecials() throws SQLException {
 
         int id;
         String barcode;
@@ -473,7 +569,7 @@ public class Database {
         if (con == null) {
             connect();
         }
-        specialList.clear();
+        specials.clear();
         PreparedStatement ps = con.prepareStatement("select * from special");
         ResultSet rs = ps.executeQuery();
         if (!rs.next()) {
@@ -490,14 +586,14 @@ public class Database {
                 quantity = rs.getInt("quantity");
 
                 Special special = new Special(id, barcode, alisFiyati, satisFiyati, urunAdi, eklemeTarihi, quantity);
-                specialList.add(special);
+                specials.add(special);
             } while (rs.next());
         }
 
         ps.close();
         rs.close();
 
-        return specialList;
+        return specials;
     }
 
     public ArrayList<String> readUsers() throws SQLException {
@@ -535,9 +631,8 @@ public class Database {
     }
 
     ///////////////////////////////////// Write methods ////////////////////////////////////////////////////////////////////
-    public void writeContactLens(String barcode, String renk, String ozelAdi, double multifokal, double temelEgri,
-                                 double diyoptri, double aks, double silindirik, double tumCap, double alisFiyat,
-                                 double satisFiyat, int quantity) throws SQLException {
+    public void writeContactLens(String barcode, String diyoptri, String aks, String silindirik, String tarih, double alisFiyati, double satisFiyati, int quantity
+    ) throws SQLException {
 
         if (con == null) {
             connect();
@@ -546,22 +641,17 @@ public class Database {
         // if it is already in, then update
         if (searchContactLens(barcode).isEmpty()) {
 
-            PreparedStatement ps = con.prepareStatement("insert into contact_lenses(barcode,renk,ozel_adi," +
-                    "multifokal,temel_egri,diyoptri,aks,silindirik,tum_cap,alis_fiyati,satis_fiyati,quantity) " +
-                    "values(?,?,?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement ps = con.prepareStatement("insert into contact_lenses(barcode,diyoptri,aks,silindirik,tarih,alis_fiyati,satis_fiyati,quantity) " +
+                    "values(?,?,?,?,?,?,?,?)");
 
             ps.setString(1, barcode);
-            ps.setString(2, renk);
-            ps.setString(3, ozelAdi);
-            ps.setDouble(4, multifokal);
-            ps.setDouble(5, temelEgri);
-            ps.setDouble(6, diyoptri);
-            ps.setDouble(7, aks);
-            ps.setDouble(8, silindirik);
-            ps.setDouble(9, tumCap);
-            ps.setDouble(10, alisFiyat);
-            ps.setDouble(11, satisFiyat);
-            ps.setInt(12, quantity);
+            ps.setString(2, diyoptri);
+            ps.setString(3, aks);
+            ps.setString(4, silindirik);
+            ps.setString(5, tarih);
+            ps.setDouble(6, alisFiyati);
+            ps.setDouble(7, satisFiyati);
+            ps.setDouble(8, quantity);
 
             try {
                 ps.execute();
@@ -656,27 +746,24 @@ public class Database {
 
     }
 
-    public void writeGlass(String barcode, double alisFiyati, double satisFiyati, double silendirik, double sferik,
-                           String tur, String marka, String tip, int aks, int quantity) throws SQLException {
+    public void writeGlass(String barcode, double alisFiyati, double satisFiyati, String tur, String marka,
+                           String index, String tarih, int quantity) throws SQLException {
         if (con == null) {
             connect();
         }
 
         if (searchGlasses(barcode).isEmpty()) {
             PreparedStatement ps = con.prepareStatement(
-                    "insert into glass(barcode,alis_fiyati,satis_fiyati,silendirik,sferik,tur,marka,tip,aks," +
-                            "quantity) values(?,?,?,?,?,?,?,?,?,?)");
+                    "insert into glass(barcode,alis_fiyati,satis_fiyati,tur,marka,index,tarih,quantity) values(?,?,?,?,?,?,?,?)");
 
             ps.setString(1, barcode);
             ps.setDouble(2, alisFiyati);
             ps.setDouble(3, satisFiyati);
-            ps.setDouble(4, silendirik);
-            ps.setDouble(5, sferik);
-            ps.setString(6, tur);
-            ps.setString(7, marka);
-            ps.setString(8, tip);
-            ps.setInt(9, aks);
-            ps.setInt(10, quantity);
+            ps.setString(4, tur);
+            ps.setString(5, marka);
+            ps.setString(6, index);
+            ps.setString(7, tarih);
+            ps.setInt(8, quantity);
 
             try {
                 ps.execute();
@@ -690,20 +777,79 @@ public class Database {
 
     }
 
-    public void writePrescription(String receteNo, String olusturmaTarihi, String basvuruTarihi, String sigortaDurumu)
-            throws SQLException {
+    public void writePrescriptionLens(String receteNo, String receteTarihi, String tarih, String rlBarcode,
+                                      String rlTemelEgri, String rlTumCap, String rlTorik, String rlMultifokal,
+                                      String rlRenk, String rlOzelAd, String llBarcode, String llTemelEgri,
+                                      String llTumCap, String llTorik, String llMultifokal, String llRenk,
+                                      String llOzelAd) throws SQLException {
         if (con == null) {
             connect();
         }
-        if (searchPrescriptions(receteNo).isEmpty()) {
+        if (searchPrescriptionLens(receteNo).isEmpty()) {
             PreparedStatement ps = con.prepareStatement(
-                    "insert into prescription(recete_no,olusturma_tarihi,basvuru_tarihi,sigorta_durumu)" +
-                            " values(?,?,?,?)");
+                    "insert into prescription(recete_no,recete_tarihi,tarih,r_lens_barcode,r_lens_temel_egri," +
+                            "r_lens_tum_cap,r_lens_torik,r_lens_multifokal,r_lens_renk,r_lens_ozel_ad,l_lens_barcode," +
+                            "l_lens_temel_egri,l_lens_tum_cap,l_lens_torik,l_lens_multifokal,l_lens_renk,l_lens_ozel_ad)" +
+                            " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             ps.setString(1, receteNo);
-            ps.setString(2, olusturmaTarihi);
-            ps.setString(3, basvuruTarihi);
-            ps.setString(4, sigortaDurumu);
+            ps.setString(2, receteTarihi);
+            ps.setString(3, tarih);
+            ps.setString(4, rlBarcode);
+            ps.setString(5, rlTemelEgri);
+            ps.setString(6, rlTumCap);
+            ps.setString(7, rlTorik);
+            ps.setString(8, rlMultifokal);
+            ps.setString(9, rlRenk);
+            ps.setString(10, rlOzelAd);
+            ps.setString(11, llBarcode);
+            ps.setString(12, llTemelEgri);
+            ps.setString(13, llTumCap);
+            ps.setString(14, llTorik);
+            ps.setString(15, llMultifokal);
+            ps.setString(16, llRenk);
+            ps.setString(17, llOzelAd);
+
+            try {
+                ps.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            ps.close();
+        } else {
+            // TODO: it is already in there
+        }
+    }
+
+    public void writePrescriptionCam(String receteNo, String receteTarihi, String tarih, String rcBarcode, String rcSph,
+                                     String rcCyl, String rcAx, String rcPd, String rcYukseklik, String lcBarcode,
+                                     String lcSph, String lcCyl, String lcAx, String lcPd, String lcYukseklik) throws
+            SQLException {
+        if (con == null) {
+            connect();
+        }
+        if (searchPrescriptionCam(receteNo).isEmpty()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "insert into prescription(recete_no,recete_tarihi,tarih,r_cam_barcode, l_cam_barcode, r_cam_sph," +
+                            " l_cam_sph, r_cam_cyl, l_cam_cyl, r_cam_ax, l_cam_ax, r_cam_pd, l_cam_pd, r_cam_yukseklik, " +
+                            "l_cam_yukseklik)" +
+                            " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+            ps.setString(1, receteNo);
+            ps.setString(2, receteTarihi);
+            ps.setString(3, tarih);
+            ps.setString(4, rcBarcode);
+            ps.setString(5, lcBarcode);
+            ps.setString(6, rcSph);
+            ps.setString(7, lcSph);
+            ps.setString(8, rcCyl);
+            ps.setString(9, lcCyl);
+            ps.setString(10, rcAx);
+            ps.setString(11, lcAx);
+            ps.setString(12, rcPd);
+            ps.setString(13, lcPd);
+            ps.setString(14, rcYukseklik);
+            ps.setString(15, lcYukseklik);
 
             try {
                 ps.execute();
@@ -733,17 +879,22 @@ public class Database {
         ps.close();
     }
 
-    public void writeSale(double toplamFiyat, double indirim, String tcNo, String receteNo) throws SQLException {
+    public void writeSale(double toplamFiyat, String tarih, String tcNo, String camReceteNo, String lensReceteNo,
+                          double sgk, double kart, double nakit) throws SQLException {
         if (con == null) {
             connect();
         }
-        PreparedStatement ps = con.prepareStatement("insert into sale(toplam_fiyat,indirim,tc_no,recete_no)" +
-                " values(?,?,?,?)");
+        PreparedStatement ps = con.prepareStatement("insert into sale(tarih, tc_no, toplam_fiyat, nakit, kart, sgk, " +
+                "lens_recete_no, cam_recete_no) values(?,?,?,?,?,?,?,?)");
 
-        ps.setDouble(1, toplamFiyat);
-        ps.setDouble(2, indirim);
-        ps.setString(3, tcNo);
-        ps.setString(4, receteNo);
+        ps.setString(1, tarih);
+        ps.setString(2, tcNo);
+        ps.setDouble(3, toplamFiyat);
+        ps.setDouble(4, nakit);
+        ps.setDouble(5, kart);
+        ps.setDouble(6, sgk);
+        ps.setString(7, lensReceteNo);
+        ps.setString(8, camReceteNo);
 
         try {
             ps.execute();
@@ -898,18 +1049,6 @@ public class Database {
         rs.close();
     }
 
-    public int readLastSaleId() throws Exception {
-        if (con == null) {
-            connect();
-        }
-        PreparedStatement ps = con.prepareStatement("SELECT max(id_sale) as id_sale FROM sale");
-        ResultSet rs = ps.executeQuery();
-        int result = rs.getInt("id_sale");
-        ps.close();
-        rs.close();
-
-        return result;
-    }
 
     public void readPrescriptionColumnName() throws SQLException {
         if (con == null) {
@@ -1026,15 +1165,10 @@ public class Database {
 
         int id;
         String barcode;
-        double multifokal;
-        double temelEgri;
-        double diyoptri;
-        double aks;
-        double silindirik;
-        double tumCap;
-        String renk;
-        String ozelAdi;
-        String eklemeTarihi;
+        String diyoptri;
+        String aks;
+        String silindirik;
+        String tarih;
         double alisFiyati;
         double satisFiyati;
         int quantity;
@@ -1042,8 +1176,8 @@ public class Database {
         if (con == null) {
             connect();
         }
+        lenses.clear();
 
-        searchResultLens.clear();
 
         PreparedStatement ps = con.prepareStatement("select * from contact_lenses where barcode='" + searchBarcode
                 + "'");
@@ -1051,37 +1185,33 @@ public class Database {
 
         if (!rs.next()) {
             // TODO: empty
+
             // System.out.println("Empty result");
         } else {
             do {
+
                 id = rs.getInt("id_contact");
                 barcode = rs.getString("barcode");
-                multifokal = rs.getDouble("multifokal");
-                temelEgri = rs.getDouble("temel_egri");
-                diyoptri = rs.getDouble("diyoptri");
-                aks = rs.getDouble("aks");
-                silindirik = rs.getDouble("silindirik");
-                tumCap = rs.getDouble("tum_cap");
-                renk = rs.getString("renk");
-                ozelAdi = rs.getString("ozel_adi");
-                eklemeTarihi = rs.getString("ekleme_tarihi");
+                diyoptri = rs.getString("diyoptri");
+                aks = rs.getString("aks");
+                silindirik = rs.getString("silindirik");
+                tarih = rs.getString("tarih");
                 alisFiyati = rs.getDouble("alis_fiyati");
                 satisFiyati = rs.getDouble("satis_fiyati");
                 quantity = rs.getInt("quantity");
 
-                searchResultLens.add(new ContactLens(id, barcode, multifokal, temelEgri, diyoptri, aks, silindirik,
-                        tumCap, renk, ozelAdi, eklemeTarihi, alisFiyati, satisFiyati, quantity));
-
+                ContactLens contactLens = new ContactLens(id, barcode, diyoptri, aks, silindirik, tarih, alisFiyati, satisFiyati, quantity);
+                lenses.add(contactLens);
             } while (rs.next());
         }
-
         ps.close();
         rs.close();
+        return lenses;
 
-        return searchResultLens;
     }
 
     public ObservableList<Customer> searchCustomers(String tckn) throws SQLException {
+
 
         int id;
         String tcNo;
@@ -1093,32 +1223,33 @@ public class Database {
         if (con == null) {
             connect();
         }
-        searchResultCustomer.clear();
+
+        customers.clear();
+
         PreparedStatement statement = con.prepareStatement("select * from customer where tckn = ?");
         statement.setString(1, tckn);
         ResultSet rs = statement.executeQuery();
-
         if (!rs.next()) {
             // TODO: empty
-            //  System.out.println("Empty result");
+            // System.out.println("Empty result");
         } else {
             do {
+
                 id = rs.getInt("id_customer");
                 tcNo = rs.getString("tckn");
-                eklemeTarihi = rs.getString("ekleme_tarihi");
+                eklemeTarihi = rs.getString("tarih");
                 isim = rs.getString("isim");
                 soyisim = rs.getString("soyisim");
                 telefon = rs.getString("telefon");
 
-                searchResultCustomer.add(new Customer(id, tcNo, eklemeTarihi, isim, soyisim, telefon));
-
+                Customer customer = new Customer(id, tcNo, eklemeTarihi, isim, soyisim, telefon);
+                customers.add(customer);
             } while (rs.next());
         }
-
         statement.close();
         rs.close();
 
-        return searchResultCustomer;
+        return customers;
     }
 
     public ObservableList<Extra> searchExtrasByBarcode(String searchBarcode) throws SQLException {
@@ -1132,14 +1263,12 @@ public class Database {
         if (con == null) {
             connect();
         }
-        searchResultExtra.clear();
+        extras.clear();
         PreparedStatement ps = con.prepareStatement("select * from extras where barcode='" + searchBarcode + "'");
-
         ResultSet rs = ps.executeQuery();
-
         if (!rs.next()) {
             // TODO: empty
-            // System.out.println("Empty result");
+            //  System.out.println("Empty result");
         } else {
             do {
                 id = rs.getInt("id_extras");
@@ -1148,15 +1277,15 @@ public class Database {
                 ozelAdi = rs.getString("aciklama");
                 eklemeTarihi = rs.getString("ekleme_tarihi");
 
-                extraList.add(new Extra(id, barcode, ozelAdi, eklemeTarihi, satisFiyati));
-
+                Extra extra = new Extra(id, barcode, ozelAdi, eklemeTarihi, satisFiyati);
+                extras.add(extra);
             } while (rs.next());
         }
 
         ps.close();
         rs.close();
 
-        return searchResultExtra;
+        return extras;
     }
 
     public ObservableList<Frame> searchFrames(String searchBarcode) throws SQLException {
@@ -1176,16 +1305,15 @@ public class Database {
         if (con == null) {
             connect();
         }
-        searchResultFrame.clear();
+        frames.clear();
         PreparedStatement ps = con.prepareStatement("select * from frames where barcode='" + searchBarcode + "'");
-
         ResultSet rs = ps.executeQuery();
-
         if (!rs.next()) {
             // TODO: empty
-            // System.out.println("Empty result");
+            //   System.out.println("Empty result");
         } else {
             do {
+
                 id = rs.getInt("id_frame");
                 barcode = rs.getString("barcode");
                 alisFiyati = rs.getDouble("alis_fiyati");
@@ -1193,20 +1321,21 @@ public class Database {
                 renk = rs.getString("renk");
                 marka = rs.getString("marka");
                 model = rs.getString("model");
-                ozelAdi = rs.getString("ozel_adi");
                 ekartman = rs.getString("ekartman");
                 eklemeTarihi = rs.getString("ekleme_tarihi");
+                ozelAdi = rs.getString("ozel_adi");
                 quantity = rs.getInt("quantity");
 
-                searchResultFrame.add(new Frame(id, barcode, alisFiyati, satisFiyati, renk, marka, model, ozelAdi,
-                        ekartman, eklemeTarihi, quantity));
-
+                Frame frame = new Frame(id, barcode, alisFiyati, satisFiyati, renk, marka, model, ozelAdi, ekartman,
+                        eklemeTarihi, quantity);
+                frames.add(frame);
             } while (rs.next());
         }
 
         ps.close();
         rs.close();
-        return searchResultFrame;
+
+        return frames;
     }
 
     public ObservableList<Glass> searchGlasses(String searchBarcode) throws SQLException {
@@ -1215,22 +1344,21 @@ public class Database {
         String barcode;
         double alisFiyati;
         double satisFiyati;
-        double silendirik;
-        double sferik;
         String tur;
         String marka;
-        String tip;
-        int aks;
-        String eklemeTarihi;
+        String index;
+        String tarih;
         int quantity;
 
         if (con == null) {
             connect();
         }
-        searchResultGlass.clear();
-        PreparedStatement ps = con.prepareStatement("select * from glass where barcode ='" + searchBarcode + "'");
 
+        glasses.clear();
+
+        PreparedStatement ps = con.prepareStatement("select * from glass where barcode ='" + searchBarcode + "'");
         ResultSet rs = ps.executeQuery();
+
 
         if (!rs.next()) {
             // TODO: empty
@@ -1241,43 +1369,50 @@ public class Database {
                 barcode = rs.getString("barcode");
                 alisFiyati = rs.getDouble("alis_fiyati");
                 satisFiyati = rs.getDouble("satis_fiyati");
-                silendirik = rs.getDouble("silendirik");
-                sferik = rs.getDouble("sferik");
                 tur = rs.getString("tur");
                 marka = rs.getString("marka");
-                tip = rs.getString("tip");
-                aks = rs.getInt("aks");
-                eklemeTarihi = rs.getString("ekleme_tarihi");
+                tarih = rs.getString("tarih");
                 quantity = rs.getInt("quantity");
-
-                searchResultGlass.add(new Glass(id, barcode, alisFiyati, satisFiyati, silendirik, sferik, tur, marka,
-                        tip, aks, eklemeTarihi, quantity));
-
+                index = rs.getString("index");
+                Glass glass = new Glass(id, barcode, alisFiyati, satisFiyati, tur, marka, index, tarih, quantity);
+                glasses.add(glass);
             } while (rs.next());
         }
+
 
         ps.close();
         rs.close();
 
-        return searchResultGlass;
+        return glasses;
     }
 
-    public ObservableList<PrescriptionCam> searchPrescriptions(String searchReceteNo) throws SQLException {
+    public ObservableList<PrescriptionCam> searchPrescriptionCam(String searchReceteNo) throws SQLException {
 
         int id;
         String receteNo;
-        String olusturmaTarihi;
-        String basvuruTarihi;
-        String teslimTarihi;
-        String sigortaDurumu;
+        String receteTarihi;
+        String tarih;
+        String rcBarcode;
+        String rcSph;
+        String rcCyl;
+        String rcAx;
+        String rcPd;
+        String rcYukseklik;
+        String lcBarcode;
+        String lcSph;
+        String lcCyl;
+        String lcAx;
+        String lcPd;
+        String lcYukseklik;
 
         if (con == null) {
             connect();
         }
-        searchResultPrescription.clear();
-        PreparedStatement ps = con.prepareStatement("select * from prescription where recete_no = '"
-                + searchReceteNo + "'");
 
+        prescriptionCams.clear();
+
+        PreparedStatement ps = con.prepareStatement("select * from prescription_cam where recete_no = '"
+                + searchReceteNo + "'");
         ResultSet rs = ps.executeQuery();
 
         if (!rs.next()) {
@@ -1287,35 +1422,119 @@ public class Database {
             do {
                 id = rs.getInt("id_prescription");
                 receteNo = rs.getString("recete_no");
-                olusturmaTarihi = rs.getString("olusturma_tarihi");
-                basvuruTarihi = rs.getString("basvuru_tarihi");
-                teslimTarihi = rs.getString("teslim_tarihi");
-                sigortaDurumu = rs.getString("sigorta_durumu");
+                receteTarihi = rs.getString("recete_tarihi");
+                tarih = rs.getString("tarih");
+                rcBarcode = rs.getString("r_cam_barcode");
+                rcSph = rs.getString("r_cam_sph");
+                rcCyl = rs.getString("r_cam_cyl");
+                rcAx = rs.getString("r_cam_ax");
+                rcPd = rs.getString("r_cam_pd");
+                rcYukseklik = rs.getString("r_cam_yukseklik");
+                lcBarcode = rs.getString("l_cam_barcode");
+                lcSph = rs.getString("l_cam_sph");
+                lcCyl = rs.getString("l_cam_cyl");
+                lcAx = rs.getString("l_cam_ax");
+                lcPd = rs.getString("l_cam_pd");
+                lcYukseklik = rs.getString("l_cam_yukseklik");
 
-                PrescriptionCam prescription = new PrescriptionCam(id, receteNo, olusturmaTarihi, basvuruTarihi, teslimTarihi,
-                        sigortaDurumu);
-                searchResultPrescription.add(prescription);
+
+                PrescriptionCam prescription = new PrescriptionCam(id, receteNo, receteTarihi, tarih, rcBarcode, rcSph, rcCyl, rcAx, rcPd, rcYukseklik, lcBarcode, lcSph, lcCyl, lcAx, lcPd, lcYukseklik);
+                prescriptionCams.add(prescription);
+
             } while (rs.next());
         }
+
 
         ps.close();
         rs.close();
 
-        return searchResultPrescription;
+        return prescriptionCams;
     }
+    public ObservableList<PrescriptionLens> searchPrescriptionLens(String searchReceteNo) throws SQLException {
 
-    public ObservableList<Sale> searchSales(int saleId) throws SQLException {
         int id;
-        double toplamFiyat;
-        double indirim;
-        String eklemeTarihi;
-        String tcNo;
         String receteNo;
+        String receteTarihi;
+        String tarih;
+        String rlBarcode;
+        String rlTemelEgri;
+        String rlTumCap;
+        String rlTorik;
+        String rlMultifokal;
+        String rlRenk;
+        String rlOzelAd;
+        String llBarcode;
+        String llTemelEgri;
+        String llTumCap;
+        String llTorik;
+        String llMultifokal;
+        String llRenk;
+        String llOzelAd;
 
         if (con == null) {
             connect();
         }
-        searchResultSale.clear();
+
+        prescriptionLenses.clear();
+
+        PreparedStatement ps = con.prepareStatement("select * from prescription_lens where recete_no = ?");
+        ps.setString(1,searchReceteNo);
+        ResultSet rs = ps.executeQuery();
+
+        if (!rs.next()) {
+            // TODO: empty
+            // System.out.println("Empty result");
+        } else {
+            do {
+                id = rs.getInt("id_prescription");
+                receteNo = rs.getString("recete_no");
+                receteTarihi = rs.getString("recete_tarihi");
+                tarih = rs.getString("tarih");
+                rlBarcode = rs.getString("r_lens_barcode");
+                rlTemelEgri = rs.getString("r_lens_temel_egri");
+                rlTumCap = rs.getString("r_lens_tum_cap");
+                rlTorik = rs.getString("r_lens_torik");
+                rlMultifokal = rs.getString("r_lens_multifokal");
+                rlRenk = rs.getString("r_lens_renk");
+                rlOzelAd = rs.getString("r_lens_ozel_ad");
+                llBarcode = rs.getString("l_lens_barcode");
+                llTemelEgri = rs.getString("l_lens_temel_egri");
+                llTumCap = rs.getString("l_lens_tum_cap");
+                llTorik = rs.getString("l_lens_torik");
+                llMultifokal = rs.getString("l_lens_multifokal");
+                llRenk = rs.getString("l_lens_renk");
+                llOzelAd = rs.getString("l_lens_ozel_ad");
+
+                PrescriptionLens prescriptionLens = new PrescriptionLens(id, receteNo, receteTarihi, tarih, rlBarcode, rlTemelEgri, rlTumCap, rlTorik, rlMultifokal, rlRenk, rlOzelAd, llBarcode, llTemelEgri, llTumCap, llTorik, llMultifokal, llRenk, llOzelAd);
+                prescriptionLenses.add(prescriptionLens);
+
+            } while (rs.next());
+        }
+
+
+        ps.close();
+        rs.close();
+
+        return prescriptionLenses;
+    }
+
+    public ObservableList<Sale> searchSales(int saleId) throws SQLException {
+
+        int id;
+        double toplamFiyat;
+        String tarih;
+        String tcNo;
+        String camReceteNo;
+        String lensReceteNo;
+        double sgk;
+        double kart;
+        double nakit;
+
+        if (con == null) {
+            connect();
+        }
+
+        sales.clear();
 
         PreparedStatement ps = con.prepareStatement("SELECT * FROM sale WHERE id_sale =  '" + saleId + "'");
         ResultSet rs = ps.executeQuery();
@@ -1326,21 +1545,22 @@ public class Database {
             do {
                 id = rs.getInt("id_sale");
                 toplamFiyat = rs.getDouble("toplam_fiyat");
-                indirim = rs.getDouble("indirim");
-                eklemeTarihi = rs.getString("ekleme_tarihi");
+                tarih = rs.getString("tarih");
                 tcNo = rs.getString("tc_no");
-                receteNo = rs.getString("recete_no");
+                camReceteNo = rs.getString("cam_recete_no");
+                lensReceteNo = rs.getString("lens_recete_no");
+                sgk = rs.getDouble("sgk");
+                kart = rs.getDouble("kart");
+                nakit = rs.getDouble("nakit");
 
-                Sale sale = new Sale(id, toplamFiyat, indirim, eklemeTarihi, tcNo, receteNo);
-                searchResultSale.add(sale);
-
+                Sale sale = new Sale(id, toplamFiyat, tarih, tcNo, camReceteNo, lensReceteNo, sgk, kart, nakit);
+                sales.add(sale);
             } while (rs.next());
         }
 
         ps.close();
         rs.close();
-
-        return searchResultSale;
+        return sales;
     }
 
     public ArrayList<Integer> searchSale(String tckn) throws SQLException {
@@ -1373,6 +1593,7 @@ public class Database {
 
     public ObservableList<Special> searchSpecials(String searchBarcode) throws SQLException {
 
+
         int id;
         String barcode;
         double alisFiyati;
@@ -1384,11 +1605,10 @@ public class Database {
         if (con == null) {
             connect();
         }
-        searchResultSpecial.clear();
+        specials.clear();
         PreparedStatement ps = con.prepareStatement("select * from special where barcode ='" + searchBarcode + "'");
 
         ResultSet rs = ps.executeQuery();
-
         if (!rs.next()) {
             // TODO: empty
             // System.out.println("Empty result");
@@ -1402,16 +1622,15 @@ public class Database {
                 eklemeTarihi = rs.getString("ekleme_tarihi");
                 quantity = rs.getInt("quantity");
 
-                searchResultSpecial.add(new Special(id, barcode, alisFiyati, satisFiyati, urunAdi, eklemeTarihi,
-                        quantity));
-
+                Special special = new Special(id, barcode, alisFiyati, satisFiyati, urunAdi, eklemeTarihi, quantity);
+                specials.add(special);
             } while (rs.next());
         }
 
         ps.close();
         rs.close();
 
-        return searchResultSpecial;
+        return specials;
     }
 
     public ArrayList<String> searchUsers(String username) throws SQLException {
@@ -1459,33 +1678,33 @@ public class Database {
             connect();
         }
 
-        searchResultAll.clear();
+        objects.clear();
         if (!searchContactLens(searchBarcode).isEmpty()) {
             for (int i = 0; i < searchContactLens(searchBarcode).size(); i++) {
-                searchResultAll.add(searchResultLens.get(i));
+                objects.add(lenses.get(i));
             }
         }
         if (!searchExtrasByBarcode(searchBarcode).isEmpty()) {
             for (int i = 0; i < searchExtrasByBarcode(searchBarcode).size(); i++) {
-                searchResultAll.add(searchResultExtra.get(i));
+                objects.add(extras.get(i));
             }
         }
         if (!searchFrames(searchBarcode).isEmpty()) {
             for (int i = 0; i < searchFrames(searchBarcode).size(); i++) {
-                searchResultAll.add(searchResultFrame.get(i));
+                objects.add(frames.get(i));
             }
         }
         if (!searchGlasses(searchBarcode).isEmpty()) {
             for (int i = 0; i < searchGlasses(searchBarcode).size(); i++) {
-                searchResultAll.add(searchResultGlass.get(i));
+                objects.add(glasses.get(i));
             }
         }
         if (!searchSpecials(searchBarcode).isEmpty()) {
             for (int i = 0; i < searchSpecials(searchBarcode).size(); i++) {
-                searchResultAll.add(searchResultSpecial.get(i));
+                objects.add(specials.get(i));
             }
         }
-        return searchResultAll;
+        return objects;
     }
 
     public String searchType(String barcode) throws SQLException {
@@ -1493,25 +1712,25 @@ public class Database {
             connect();
         }
         String tableName = "Null";
-        searchResultAll.clear();
+        objects.clear();
 
         for (int i = 0; i < searchContactLens(barcode).size(); i++) {
-            searchResultAll.add(searchResultLens.get(i));
+            objects.add(lenses.get(i));
         }
         for (int i = 0; i < searchExtrasByBarcode(barcode).size(); i++) {
-            searchResultAll.add(searchResultExtra.get(i));
+            objects.add(extras.get(i));
         }
         for (int i = 0; i < searchFrames(barcode).size(); i++) {
-            searchResultAll.add(searchResultFrame.get(i));
+            objects.add(frames.get(i));
         }
         for (int i = 0; i < searchGlasses(barcode).size(); i++) {
-            searchResultAll.add(searchResultGlass.get(i));
+            objects.add(glasses.get(i));
         }
         for (int i = 0; i < searchSpecials(barcode).size(); i++) {
-            searchResultAll.add(searchResultSpecial.get(i));
+            objects.add(specials.get(i));
         }
-        if (!searchResultAll.isEmpty()) {
-            tableName = searchResultAll.get(0).getClass().getSimpleName();
+        if (!objects.isEmpty()) {
+            tableName = objects.get(0).getClass().getSimpleName();
         }
         return tableName;
     }
@@ -1526,7 +1745,6 @@ public class Database {
             connect();
         }
 
-        searchResultAll.clear();
 
         PreparedStatement ps = con.prepareStatement("SELECT * FROM record WHERE sale_id = '" + saleId + "'");
         ResultSet rs = ps.executeQuery();
@@ -1555,7 +1773,6 @@ public class Database {
             connect();
         }
 
-        searchResultAll.clear();
 
         PreparedStatement ps = con.prepareStatement("SELECT * FROM record WHERE product_barcode = '" + barcode + "';");
         ResultSet rs = ps.executeQuery();
@@ -1587,7 +1804,7 @@ public class Database {
             connect();
         }
 
-        searchResultExtra.clear();
+        extras.clear();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM extras WHERE ekleme_tarihi BETWEEN ? AND ? ");
         ps.setString(1, firstDate);
         ps.setString(2, lastDate);
@@ -1607,30 +1824,33 @@ public class Database {
 
                 Extra extra = new Extra(id, barcode, ozelAdi, eklemeTarihi, satisFiyati);
 
-                searchResultExtra.add(extra);
+                extras.add(extra);
 
             } while (rs.next());
         }
 
         ps.close();
         rs.close();
-        return searchResultExtra;
+        return extras;
 
     }
 
     public ObservableList<Sale> searchSaleBetween(String firstDate, String lastDate) throws SQLException {
         int id;
         double toplamFiyat;
-        double indirim;
-        String eklemeTarihi;
+        String tarih;
         String tcNo;
-        String receteNo;
+        String camReceteNo;
+        String lensReceteNo;
+        double sgk;
+        double kart;
+        double nakit;
 
         if (con == null) {
             connect();
         }
 
-        searchResultSale.clear();
+        sales.clear();
 
         PreparedStatement ps = con.prepareStatement("SELECT * FROM sale WHERE ekleme_tarihi BETWEEN ? AND ? ");
         ps.setString(1, firstDate);
@@ -1639,25 +1859,28 @@ public class Database {
 
         if (!rs.next()) {
             // TODO: empty
-            //System.out.println("Empty result");
+            // System.out.println("Empty result");
         } else {
             do {
                 id = rs.getInt("id_sale");
                 toplamFiyat = rs.getDouble("toplam_fiyat");
-                indirim = rs.getDouble("indirim");
-                eklemeTarihi = rs.getString("ekleme_tarihi");
+                tarih = rs.getString("tarih");
                 tcNo = rs.getString("tc_no");
-                receteNo = rs.getString("recete_no");
+                camReceteNo = rs.getString("cam_recete_no");
+                lensReceteNo = rs.getString("lens_recete_no");
+                sgk = rs.getDouble("sgk");
+                kart = rs.getDouble("kart");
+                nakit = rs.getDouble("nakit");
 
-                Sale sale = new Sale(id, toplamFiyat, indirim, eklemeTarihi, tcNo, receteNo);
-                searchResultSale.add(sale);
-
+                Sale sale = new Sale(id, toplamFiyat, tarih, tcNo, camReceteNo, lensReceteNo, sgk, kart, nakit);
+                sales.add(sale);
             } while (rs.next());
         }
 
         ps.close();
         rs.close();
-        return searchResultSale;
+        return sales;
+
 
     }
 
@@ -1845,17 +2068,34 @@ public class Database {
         return affectedRowCnt;
     }
 
+    public int deletePrescriptionCam(String receteNo) throws SQLException {
+        int affectedRowCnt = 0;
+        if (con == null) {
+            connect();
+        }
+        if (searchPrescriptionCam(receteNo).isEmpty()) {
+            // TODO: empty result
+
+        } else {
+
+            PreparedStatement ps = con.prepareStatement("DELETE FROM prescription_cam WHERE recete_no = ?");
+            ps.setString(1, receteNo);
+            affectedRowCnt = ps.executeUpdate();
+            ps.close();
+        }
+        return affectedRowCnt;
+    }
     public int deletePrescription(String receteNo) throws SQLException {
         int affectedRowCnt = 0;
         if (con == null) {
             connect();
         }
-        if (searchPrescriptions(receteNo).isEmpty()) {
+        if (searchPrescriptionLens(receteNo).isEmpty()) {
             // TODO: empty result
 
         } else {
 
-            PreparedStatement ps = con.prepareStatement("DELETE FROM prescription WHERE recete_no = ?");
+            PreparedStatement ps = con.prepareStatement("DELETE FROM prescription_lens WHERE recete_no = ?");
             ps.setString(1, receteNo);
             affectedRowCnt = ps.executeUpdate();
             ps.close();
@@ -1930,6 +2170,20 @@ public class Database {
             ps.close();
         }
         return affectedRowCnt;
+    }
+
+    ////////////////////////////////////////////// misc ///////////////////////////////////////////////////////////////
+    public int readLastSaleId() throws Exception {
+        if (con == null) {
+            connect();
+        }
+        PreparedStatement ps = con.prepareStatement("SELECT max(id_sale) as id_sale FROM sale");
+        ResultSet rs = ps.executeQuery();
+        int result = rs.getInt("id_sale");
+        ps.close();
+        rs.close();
+
+        return result;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
