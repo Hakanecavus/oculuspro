@@ -8,30 +8,30 @@ public class Glass {
 	private double satisFiyati;
 	private String tur;
 	private String marka;
-	private String index;
+	private String indeks;
 	private String tarih;
 	private int quantity;
 	private int saleId;
 
-	public Glass(String barcode, double alisFiyati, double satisFiyati, String tur, String marka, String index, String tarih, int quantity) {
+	public Glass(String barcode, double alisFiyati, double satisFiyati, String tur, String marka, String indeks, String tarih, int quantity) {
 		this.barcode = barcode;
 		this.alisFiyati = alisFiyati;
 		this.satisFiyati = satisFiyati;
 		this.tur = tur;
 		this.marka = marka;
-		this.index = index;
+		this.indeks = indeks;
 		this.tarih = tarih;
 		this.quantity = quantity;
 	}
 
-	public Glass(int id, String barcode, double alisFiyati, double satisFiyati, String tur, String marka, String index, String tarih, int quantity) {
+	public Glass(int id, String barcode, double alisFiyati, double satisFiyati, String tur, String marka, String indeks, String tarih, int quantity) {
 		this.id = id;
 		this.barcode = barcode;
 		this.alisFiyati = alisFiyati;
 		this.satisFiyati = satisFiyati;
 		this.tur = tur;
 		this.marka = marka;
-		this.index = index;
+		this.indeks = indeks;
 		this.tarih = tarih;
 		this.quantity = quantity;
 	}
@@ -84,12 +84,12 @@ public class Glass {
 		this.marka = marka;
 	}
 
-	public String getIndex() {
-		return index;
+	public String getindeks() {
+		return indeks;
 	}
 
-	public void setIndex(String index) {
-		this.index = index;
+	public void setindeks(String indeks) {
+		this.indeks = indeks;
 	}
 
 	public String getTarih() {
@@ -125,7 +125,7 @@ public class Glass {
 				", satisFiyati=" + satisFiyati +
 				", tur='" + tur + '\'' +
 				", marka='" + marka + '\'' +
-				", index='" + index + '\'' +
+				", indeks='" + indeks + '\'' +
 				", tarih='" + tarih + '\'' +
 				", quantity=" + quantity +
 				", saleId=" + saleId +

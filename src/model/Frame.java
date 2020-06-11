@@ -169,4 +169,21 @@ public class Frame {
 		this.eklemeTarihi = eklemeTarihi;
 	}
 
+	@Override
+	public String toString() {
+		return "Frame{" +
+				"id=" + id +
+				", barcode='" + barcode + '\'' +
+				", alisFiyati=" + alisFiyati +
+				", satisFiyati=" + satisFiyati +
+				", renk='" + renk + '\'' +
+				", marka='" + marka + '\'' +
+				", model='" + model + '\'' +
+				", ozelAdi='" + ozelAdi + '\'' +
+				", ekartman='" + ekartman + '\'' +
+				", eklemeTarihi='" + eklemeTarihi + '\'' +
+				", quantity=" + quantity +
+				", saleId=" + saleId +
+				'}';
+	}
 }

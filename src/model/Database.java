@@ -49,6 +49,8 @@ public class Database {
         saleColumnName = new ArrayList<String>();
         specialColumnName = new ArrayList<String>();
 
+
+
         lenses = FXCollections.observableArrayList();
         customers = FXCollections.observableArrayList();
         extras = FXCollections.observableArrayList();
@@ -60,7 +62,7 @@ public class Database {
         sales = FXCollections.observableArrayList();
         specials = FXCollections.observableArrayList();
         userList = new ArrayList<String>();
-
+        objects = FXCollections.observableArrayList();
         connect();
 
 
@@ -230,7 +232,7 @@ public class Database {
             do {
                 id = rs.getInt("id_extras");
                 barcode = rs.getString("barcode");
-                satisFiyati = rs.getDouble("satis_fiyati");
+                satisFiyati = rs.getDouble("fiyat");
                 ozelAdi = rs.getString("aciklama");
                 eklemeTarihi = rs.getString("ekleme_tarihi");
 
@@ -304,7 +306,7 @@ public class Database {
         double satisFiyati;
         String tur;
         String marka;
-        String index;
+        String indeks;
         String tarih;
         int quantity;
 
@@ -331,8 +333,8 @@ public class Database {
                 marka = rs.getString("marka");
                 tarih = rs.getString("tarih");
                 quantity = rs.getInt("quantity");
-                index = rs.getString("index");
-                Glass glass = new Glass(id, barcode, alisFiyati, satisFiyati, tur, marka, index, tarih, quantity);
+                indeks = rs.getString("indeks");
+                Glass glass = new Glass(id, barcode, alisFiyati, satisFiyati, tur, marka, indeks, tarih, quantity);
                 glasses.add(glass);
             } while (rs.next());
         }
@@ -443,7 +445,7 @@ public class Database {
             // System.out.println("Empty result");
         } else {
             do {
-                id = rs.getInt("id_prescription");
+                id = rs.getInt("id_presc_lens");
                 receteNo = rs.getString("recete_no");
                 receteTarihi = rs.getString("recete_tarihi");
                 tarih = rs.getString("tarih");
@@ -664,6 +666,7 @@ public class Database {
 
         } else {
             updateLensQuantity(barcode, quantity);
+            System.out.println("Lens already exists, so i am updating quantity");
         }
 
     }
@@ -689,20 +692,22 @@ public class Database {
             ps.close();
         } else {
             // TODO: customer is already in there, so deal with it
+            System.out.println("Customer already exists");
         }
     }
 
-    public void writeExtra(String barcode, double satisFiyati, String ozelAdi) throws SQLException {
+    public void writeExtra(String barcode, double satisFiyati, String ozelAdi, String tarih) throws SQLException {
         if (con == null) {
             connect();
         }
+
         if (searchExtrasByBarcode(barcode).isEmpty()) {
-            PreparedStatement ps = con.prepareStatement("insert into extras(barcode,aciklama, satis_fiyati)" +
-                    " values(?,?,?)");
+            PreparedStatement ps = con.prepareStatement("insert into extras(barcode,aciklama, fiyat, ekleme_tarihi)" +
+                    " values(?,?,?,?)");
             ps.setString(1, barcode);
             ps.setString(2, ozelAdi);
             ps.setDouble(3, satisFiyati);
-
+            ps.setString(4, tarih);
             try {
                 ps.execute();
             } catch (SQLException e) {
@@ -710,7 +715,8 @@ public class Database {
             }
             ps.close();
         } else {
-            updateExtraQuantity(barcode, 1);
+            // TODO: extra row already exists
+            System.out.println("extra row already exists");
         }
     }
 
@@ -741,27 +747,28 @@ public class Database {
             }
             ps.close();
         } else {
+            System.out.println("Frame already exists, so i am updating quantity");
             updateFrameQuantity(barcode, quantity);
         }
 
     }
 
     public void writeGlass(String barcode, double alisFiyati, double satisFiyati, String tur, String marka,
-                           String index, String tarih, int quantity) throws SQLException {
+                           String indeks, String tarih, int quantity) throws SQLException {
         if (con == null) {
             connect();
         }
 
         if (searchGlasses(barcode).isEmpty()) {
             PreparedStatement ps = con.prepareStatement(
-                    "insert into glass(barcode,alis_fiyati,satis_fiyati,tur,marka,index,tarih,quantity) values(?,?,?,?,?,?,?,?)");
+                    "insert into glass(barcode, alis_fiyati, satis_fiyati, tur, marka, indeks, tarih, quantity) values(?,?,?,?,?,?,?,?)");
 
             ps.setString(1, barcode);
             ps.setDouble(2, alisFiyati);
             ps.setDouble(3, satisFiyati);
             ps.setString(4, tur);
             ps.setString(5, marka);
-            ps.setString(6, index);
+            ps.setString(6, indeks);
             ps.setString(7, tarih);
             ps.setInt(8, quantity);
 
@@ -772,6 +779,7 @@ public class Database {
             }
             ps.close();
         } else {
+            System.out.println("Glass already exists, so i am updating quantity");
             updateGlassQuantity(barcode, quantity);
         }
 
@@ -787,7 +795,7 @@ public class Database {
         }
         if (searchPrescriptionLens(receteNo).isEmpty()) {
             PreparedStatement ps = con.prepareStatement(
-                    "insert into prescription(recete_no,recete_tarihi,tarih,r_lens_barcode,r_lens_temel_egri," +
+                    "insert into prescription_lens(recete_no,recete_tarihi,tarih,r_lens_barcode,r_lens_temel_egri," +
                             "r_lens_tum_cap,r_lens_torik,r_lens_multifokal,r_lens_renk,r_lens_ozel_ad,l_lens_barcode," +
                             "l_lens_temel_egri,l_lens_tum_cap,l_lens_torik,l_lens_multifokal,l_lens_renk,l_lens_ozel_ad)" +
                             " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -818,6 +826,7 @@ public class Database {
             ps.close();
         } else {
             // TODO: it is already in there
+            System.out.println("Prescription Lens already exists, doing nothing");
         }
     }
 
@@ -830,7 +839,7 @@ public class Database {
         }
         if (searchPrescriptionCam(receteNo).isEmpty()) {
             PreparedStatement ps = con.prepareStatement(
-                    "insert into prescription(recete_no,recete_tarihi,tarih,r_cam_barcode, l_cam_barcode, r_cam_sph," +
+                    "insert into prescription_cam(recete_no,recete_tarihi,tarih,r_cam_barcode, l_cam_barcode, r_cam_sph," +
                             " l_cam_sph, r_cam_cyl, l_cam_cyl, r_cam_ax, l_cam_ax, r_cam_pd, l_cam_pd, r_cam_yukseklik, " +
                             "l_cam_yukseklik)" +
                             " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -859,6 +868,7 @@ public class Database {
             ps.close();
         } else {
             // TODO: it is already in there
+            System.out.println("Prescription Cam already exists, doing nothing");
         }
     }
 
@@ -904,19 +914,20 @@ public class Database {
         ps.close();
     }
 
-    public void writeSpecial(String barcode, String urunAdi, double alisFiyati, double satisFiyati, int quantity)
+    public void writeSpecial(String barcode, String urunAdi,String eklemeTarihi, double alisFiyati, double satisFiyati, int quantity)
             throws SQLException {
         if (con == null) {
             connect();
         }
         if (searchSpecials(barcode).isEmpty()) {
             PreparedStatement ps = con.prepareStatement(
-                    "insert into special(barcode,urun_adi,alis_fiyati,satis_fiyati,quantity) values(?,?,?,?,?)");
+                    "insert into special(barcode,urun_adi,alis_fiyati,satis_fiyati,quantity,ekleme_tarihi) values(?,?,?,?,?,?)");
             ps.setString(1, barcode);
             ps.setString(2, urunAdi);
             ps.setDouble(3, alisFiyati);
             ps.setDouble(4, satisFiyati);
             ps.setInt(5, quantity);
+            ps.setString(6, eklemeTarihi);
 
             try {
                 ps.execute();
@@ -925,6 +936,7 @@ public class Database {
             }
             ps.close();
         } else {
+            System.out.println("Lens already exists, so i am updating quantity");
             updateSpecialQuantity(barcode, quantity);
         }
 
@@ -1273,7 +1285,7 @@ public class Database {
             do {
                 id = rs.getInt("id_extras");
                 barcode = rs.getString("barcode");
-                satisFiyati = rs.getDouble("satis_fiyati");
+                satisFiyati = rs.getDouble("fiyat");
                 ozelAdi = rs.getString("aciklama");
                 eklemeTarihi = rs.getString("ekleme_tarihi");
 
@@ -1346,7 +1358,7 @@ public class Database {
         double satisFiyati;
         String tur;
         String marka;
-        String index;
+        String indeks;
         String tarih;
         int quantity;
 
@@ -1373,8 +1385,8 @@ public class Database {
                 marka = rs.getString("marka");
                 tarih = rs.getString("tarih");
                 quantity = rs.getInt("quantity");
-                index = rs.getString("index");
-                Glass glass = new Glass(id, barcode, alisFiyati, satisFiyati, tur, marka, index, tarih, quantity);
+                indeks = rs.getString("indeks");
+                Glass glass = new Glass(id, barcode, alisFiyati, satisFiyati, tur, marka, indeks, tarih, quantity);
                 glasses.add(glass);
             } while (rs.next());
         }
@@ -1450,6 +1462,7 @@ public class Database {
 
         return prescriptionCams;
     }
+
     public ObservableList<PrescriptionLens> searchPrescriptionLens(String searchReceteNo) throws SQLException {
 
         int id;
@@ -1478,7 +1491,7 @@ public class Database {
         prescriptionLenses.clear();
 
         PreparedStatement ps = con.prepareStatement("select * from prescription_lens where recete_no = ?");
-        ps.setString(1,searchReceteNo);
+        ps.setString(1, searchReceteNo);
         ResultSet rs = ps.executeQuery();
 
         if (!rs.next()) {
@@ -1486,7 +1499,7 @@ public class Database {
             // System.out.println("Empty result");
         } else {
             do {
-                id = rs.getInt("id_prescription");
+                id = rs.getInt("id_presc_lens");
                 receteNo = rs.getString("recete_no");
                 receteTarihi = rs.getString("recete_tarihi");
                 tarih = rs.getString("tarih");
@@ -1818,7 +1831,7 @@ public class Database {
             do {
                 id = rs.getInt("id_extras");
                 barcode = rs.getString("barcode");
-                satisFiyati = rs.getDouble("satis_fiyati");
+                satisFiyati = rs.getDouble("fiyat");
                 ozelAdi = rs.getString("aciklama");
                 eklemeTarihi = rs.getString("ekleme_tarihi");
 
@@ -1852,7 +1865,7 @@ public class Database {
 
         sales.clear();
 
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM sale WHERE ekleme_tarihi BETWEEN ? AND ? ");
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM sale WHERE tarih BETWEEN ? AND ? ");
         ps.setString(1, firstDate);
         ps.setString(2, lastDate);
         ResultSet rs = ps.executeQuery();
@@ -1899,18 +1912,6 @@ public class Database {
         ps.close();
     }
 
-    public void updateExtraQuantity(String barcode, int quantity) throws SQLException {
-        if (con == null) {
-            connect();
-        }
-        PreparedStatement ps = con.prepareStatement("UPDATE extras SET quantity = (quantity + ? ) WHERE barcode = ?;");
-
-        ps.setInt(1, quantity);
-        ps.setString(2, barcode);
-
-        ps.executeUpdate();
-        ps.close();
-    }
 
     public void updateFrameQuantity(String barcode, int quantity) throws SQLException {
         if (con == null) {
@@ -2085,7 +2086,8 @@ public class Database {
         }
         return affectedRowCnt;
     }
-    public int deletePrescription(String receteNo) throws SQLException {
+
+    public int deletePrescriptionLens(String receteNo) throws SQLException {
         int affectedRowCnt = 0;
         if (con == null) {
             connect();
@@ -2185,7 +2187,19 @@ public class Database {
 
         return result;
     }
+    public void vacuumDatabase() throws SQLException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("VACUUM");
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            //Something if you like, or not you're the boss!
+        } finally {
+            ps.close();
+        }
 
+    }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void connect() {
 
