@@ -633,8 +633,8 @@ public class Database {
     }
 
     ///////////////////////////////////// Write methods ////////////////////////////////////////////////////////////////////
-    public void writeContactLens(String barcode, String diyoptri, String aks, String silindirik, String tarih, double alisFiyati, double satisFiyati, int quantity
-    ) throws SQLException {
+    public void writeContactLens(String barcode, String diyoptri, String aks, String silindirik, String tarih,
+                                 double alisFiyati, double satisFiyati, int quantity) throws SQLException {
 
         if (con == null) {
             connect();
@@ -1912,6 +1912,19 @@ public class Database {
         ps.close();
     }
 
+    public void updateExtraQuantity(String barcode, int quantity) throws SQLException {
+        if (con == null) {
+            connect();
+        }
+        PreparedStatement ps = con.prepareStatement("UPDATE extras SET quantity = (quantity + ? ) WHERE barcode = ?;");
+
+        ps.setInt(1, quantity);
+        ps.setString(2, barcode);
+
+        ps.executeUpdate();
+        ps.close();
+
+    }
 
     public void updateFrameQuantity(String barcode, int quantity) throws SQLException {
         if (con == null) {

@@ -239,7 +239,7 @@ public class SellController extends BorderPane {
                 }
                 tempSell.addCustomer(tckimlik.getText(), name.getText(), surname.getText(), telefon.getText());
 
-                boolean isSold = tempSell.sellProducts(sellList, toplamFiyat, dc, tckimlik.getText(),
+                boolean isSold = tempSell.sell(sellList, toplamFiyat, dc, tckimlik.getText(),
                         receteNo.getText());
 
                 if (!isSold) {
