@@ -5,6 +5,7 @@ import model.*;
 
 import javax.swing.*;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MasterController {
@@ -426,7 +427,8 @@ public class MasterController {
         }
 
     }
-//////////////////////////////////////////// Remove Methods ////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////// Remove Methods ////////////////////////////////////////////////////////////
     public void removeLens(String barcode) {
         int affectedRow = 0;
 
@@ -442,7 +444,7 @@ public class MasterController {
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null,"Ürün daha önce satıldığı için silinemedi!!"
+                JOptionPane.showMessageDialog(null, "Ürün daha önce satıldığı için silinemedi!!"
                         , "Hata!", JOptionPane.INFORMATION_MESSAGE);
 
             }
@@ -585,8 +587,10 @@ public class MasterController {
 
     }
 
-    public boolean sell(ArrayList<String> soldItems, PrescriptionCam pc,PrescriptionLens pl, double totalPrice, double discount, String tcNo,
-                        String prescNumb) throws Exception {
+    public boolean sell(ArrayList<String> soldItems, PrescriptionCam pc, PrescriptionLens pl, double totalPrice,
+                        double sgk, double kart, double nakit, double discount, String tcNo, String prescNumb)
+            throws Exception {
+
         // Steps of sale
         // 1-Check stock for errors
         // 2-If everything is fine;
@@ -615,7 +619,7 @@ public class MasterController {
                     inStock = false;
                     break;
                 }
-            }  else if (tableName.equals("Frame")) {
+            } else if (tableName.equals("Frame")) {
 
                 tempQuantity = db.searchFrames(soldItems.get(i)).get(0).getQuantity();
                 if (tempQuantity <= 0) {
@@ -640,62 +644,76 @@ public class MasterController {
         }
 
         if (inStock) {
-            if (pc != null){
-                db.writePrescriptionCam(pc.getReceteNo(),pc.getReceteTarihi(),pc.getTarih(),pc.getRcBarcode(),pc.getRcSph(),pc.getRcCyl(),pc.getRcAx(),pc.getRcPd(),pc.getRcYukseklik(),pc.getLcBarcode(),pc.getLcSph(),pc.getLcCyl(),pc.getLcAx(),pc.getLcPd(),pc.getLcYukseklik());
-            }
-            db.writeSale(toplamFiyat, tarih, tcNo, camReceteNo, lensReceteNo, sgk, kart, nakit);
-            int saleId = db.readLastSaleId();
-
-            for (int i = 0; i < soldItems.size(); i++) {
-
-
-                tableName = db.searchType(soldItems.get(i));
-                // System.out.println(tableName);
-
-                if (tableName.equals("ContactLens")) {
-
-                    db.writeRecord(soldItems.get(i), saleId);
-                    db.updateLensQuantity(soldItems.get(i), -1);
-
-                } else if (tableName.equals("Extra")) {
-
-                    db.writeRecord(soldItems.get(i), saleId);
-                    db.updateExtraQuantity(soldItems.get(i), -1);
-
-                } else if (tableName.equals("Frame")) {
-
-
-                    db.writeRecord(soldItems.get(i), saleId);
-                    db.updateFrameQuantity(soldItems.get(i), -1);
-
-                } else if (tableName.equals("Glass")) {
-
-
-                    db.writeRecord(soldItems.get(i), saleId);
-                    db.updateGlassQuantity(soldItems.get(i), -1);
-
-                } else if (tableName.equals("Special")) {
-
-                    db.writeRecord(soldItems.get(i), saleId);
-                    db.updateSpecialQuantity(soldItems.get(i), -1);
-
-                }
-
+            if (pc != null) {
+                db.writePrescriptionCam(pc.getReceteNo(), pc.getReceteTarihi(), pc.getTarih(), pc.getRcBarcode(), pc.getRcSph(), pc.getRcCyl(), pc.getRcAx(), pc.getRcPd(), pc.getRcYukseklik(), pc.getLcBarcode(), pc.getLcSph(), pc.getLcCyl(), pc.getLcAx(), pc.getLcPd(), pc.getLcYukseklik());
+            } else {
+                System.out.println("Cam recetesi yok!");
             }
 
+            if (pl != null) {
+                db.writePrescriptionLens(pl.getReceteNo(), pl.getReceteTarihi(), pl.getTarih(), pl.getRlBarcode(), pl.getRlTemelEgri(), pl.getRlTumCap(), pl.getRlTorik(), pl.getRlMultifokal(), pl.getRlRenk(), pl.getRlOzelAd(), pl.getLlBarcode(), pl.getLlTemelEgri(), pl.getLlTumCap(), pl.getLlTorik(), pl.getLlMultifokal(), pl.getLlRenk(), pl.getLlOzelAd());
+            } else {
+                System.out.println("Lens recetesi yok!");
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Stok hatası. Ürün stoğu bitmiş olabilir", "Hata!", JOptionPane.INFORMATION_MESSAGE);
         }
 
+        db.writeSale(totalPrice, LocalDateTime.now().toString(), tcNo, pc.getReceteNo(), pl.getReceteNo(), sgk, kart, nakit);
+        int saleId = db.readLastSaleId();
+
+        for (int i = 0; i < soldItems.size(); i++) {
+
+
+            tableName = db.searchType(soldItems.get(i));
+            // System.out.println(tableName);
+
+            if (tableName.equals("ContactLens")) {
+
+                db.writeRecord(soldItems.get(i), saleId);
+                db.updateLensQuantity(soldItems.get(i), -1);
+
+            } else if (tableName.equals("Extra")) {
+
+                db.writeRecord(soldItems.get(i), saleId);
+                db.updateExtraQuantity(soldItems.get(i), -1);
+
+            } else if (tableName.equals("Frame")) {
+
+
+                db.writeRecord(soldItems.get(i), saleId);
+                db.updateFrameQuantity(soldItems.get(i), -1);
+
+            } else if (tableName.equals("Glass")) {
+
+
+                db.writeRecord(soldItems.get(i), saleId);
+                db.updateGlassQuantity(soldItems.get(i), -1);
+
+            } else if (tableName.equals("Special")) {
+
+                db.writeRecord(soldItems.get(i), saleId);
+                db.updateSpecialQuantity(soldItems.get(i), -1);
+
+            }
+
+        }
+
+
+
 //		System.out.println("running");
         return inStock;
-    }
+}
 
     public ArrayList<Integer> searchByTckn(String tckn) throws SQLException {
-        ArrayList<Integer> saleIds = new ArrayList<Integer>();
-        // ArrayList<String> barcodes= new ArrayList<String>();
+        ArrayList<Integer> saleIds;
+        try{
+            saleIds = db.searchSale(tckn);
 
-        saleIds = db.searchSale(tckn);
+        }catch (SQLException e){
+            e.printStackTrace();
+            saleIds = null;
+        }
         return saleIds;
     }
 
